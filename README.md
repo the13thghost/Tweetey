@@ -15,9 +15,9 @@ Tweetey is a social media clone, intended to mimick the popular features on Twit
 2. Create a new database (for example tweetey)
 3. Open .env file and input your credentials:
 
-DB_DATABASE=__
-DB_USERNAME=__
-DB_PASSWORD=__
+DB_DATABASE=  
+DB_USERNAME=  
+DB_PASSWORD=  
 
 4. In cmd navigate to your project and run: php artisan serve
 
