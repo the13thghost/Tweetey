@@ -1,0 +1,1 @@
+<button class="loaded-ajax rounded-full font-semibold bg-blue-500 px-6 py-2 text-white hover:bg-blue-400 shadow" type="submit">{{$slot}}</button> 
