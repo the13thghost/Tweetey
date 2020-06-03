@@ -84,8 +84,6 @@ class ProfileController extends Controller
 
     //dynamic profile nav link : tweets & replies
     public function withRepliesAjax(User $user) {
-        // $returnWithReplies = ; // return a view as json response 
-        // $returnProfileTweets = ;
         $yesterday = Carbon::now()->subDay(); // calculate if tweet is more than 24 hours old
         $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
         // $tweets = Tweet::withLikes()->where('user_id', $user->id)->latest()->paginate(10);
