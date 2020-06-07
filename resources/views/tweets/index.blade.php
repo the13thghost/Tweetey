@@ -18,10 +18,10 @@
                         </svg>
                     </div>
                     <div class="ml-3 text-sm text-gray-600">
-                        @if(current_user()->is($user))
+                        @if(current_user()->is($tweet->user))
                         You Retweeted
                         @else
-                        {{$user->name}} Retweeted
+                        {{$tweet->user->name}} Retweeted
                         @endif
                     </div>
                 </div>

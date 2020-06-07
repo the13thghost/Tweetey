@@ -79,7 +79,9 @@ $(document).ready(function() {
         $(document).mouseup(function (e) {
             if ($(e.target).closest(".comment-overlay").length === 0) {
                 $('.comment-form').removeAttr('action');
+                $(".publish-errors-reply").html('');
                 $("body").css("overflow", "visible");
+                $('.counter-3 input').val(255);
                 $('.before1-div').remove();
                 $('.original-tweet').remove();
                 $(".comment-overlay, .comment-content").removeClass("active");
@@ -88,6 +90,8 @@ $(document).ready(function() {
  
         $(".close").on("click", function () {
             $(".comment-overlay, .comment-content").removeClass("active");
+            $('.counter-3 input').val(255);
+            $(".publish-errors-reply").html('');
             $('.original-tweet').remove();
             $("body").css("overflow", "visible");
         });
@@ -105,6 +109,7 @@ $(document).ready(function() {
             if ($(e.target).closest(".bio-overlay").length === 0) {
                 $('.retweet-comment-form').removeAttr('action');
                 $("body").css("overflow", "visible");
+                $('.counter-2 input').val(140);
                 $('.before-div').remove();
                 $(".bio-overlay, .bio-content").removeClass("active");
             }
@@ -112,6 +117,7 @@ $(document).ready(function() {
 
         $(".close").on("click", function () {
             $(".bio-overlay, .bio-content").removeClass("active");
+            $('.counter-2 input').val(140);
             $("body").css("overflow", "visible");
         });
     });
@@ -163,6 +169,5 @@ $(function () {
         } else {
             imagesPreview(this, 'div.gallery');
         }
-        imagesPreview(this, 'div.gallery');
     });
 });

@@ -184,7 +184,7 @@ class TweetController extends Controller
 
             ]);
         } elseif(!is_null($tweet->retweeted_from)) { // a retweet with a comment
-            $tweet1 = Tweet::where('id', $tweet->retweeted_from)->firstOrFail();
+            $tweet1 = Tweet::where('id', $tweet->retweeted_from)->first();
             if($tweet1->created_at < $yesterday) {
                 $datetime1 = $tweet1->created_at->format('M d, Y');
             } else {

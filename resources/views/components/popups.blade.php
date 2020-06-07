@@ -22,13 +22,13 @@
                     <div>
                         <textarea class="mention w-full block mb-3 p-2 text-xl append-body"
                             onblur="textCounter(this,this.form.counter,255);"
-                            onkeyup="textCounter(this,this.form.counter,255);" name="body" id="body" 
+                            onkeyup="textCounter(this,this.form.counter,255);" name="body" id="body"
                             placeholder="What's happening?"></textarea>
                     </div>
                     <div class="publish-errors-comment text-sm text-red-500 font-semibold text-left"></div>
                     <div class="flex justify-end items-center">
                         <div class="counter-1">
-                        <input class="text-blue-300 z-30" style="background:none;width:40px"
+                            <input class="text-blue-300 z-30" style="background:none;width:40px"
                                 onblur="textCounter(this.form.recipients,this,255);" disabled onfocus="this.blur();"
                                 tabindex="999" maxlength="3" size="3" value="255" name="counter">
                         </div>
@@ -65,22 +65,19 @@
                 <form method="POST" class="w-full bio-form" action="/profile/{{$user->id}}/bio">
                     @csrf
                     @method('PUT')
-                    <div class="relative">
+                    <div>
                         <textarea class="w-full block mb-3 p-2 text-xl"
                             onblur="textCounter(this,this.form.counter,140);"
                             onkeyup="textCounter(this,this.form.counter,140);" name="bio" id="bio" required
                             placeholder="Edit bio...">
-                </textarea>
+                        </textarea>
+                    </div>
+                    <div class="flex justify-end items-center">
                         <div class="counter-2 align-right">
-                            <input class="absolute text-blue-300 z-30" style="right:-18px;bottom:105px;background:none"
+                            <input class="text-blue-300 z-30" style="width:40px;background:none"
                                 onblur="textCounter(this.form.recipients,this,140);" disabled onfocus="this.blur();"
                                 tabindex="999" maxlength="3" size="3" value="140" name="counter">
                         </div>
-                    </div>
-                    @error('bio')
-                    <p class="text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                    <div class="flex justify-end">
                         <button id="save-bio"
                             class="mr-3 cursor-pointer rounded-full font-semibold bg-blue-500 px-6 py-2 text-white hover:bg-blue-400 block shadow"
                             type="submit">
@@ -129,23 +126,22 @@
                     <x-avatar-icon>{{current_user()->avatar}}</x-avatar-icon>
                     <form method="POST" class="w-full comment-form">
                         @csrf
-                        <div class="relative">
+                        <div>
                             <textarea class="w-full block mb-3 p-2 text-xl"
                                 onblur="textCounter(this,this.form.counter,255);"
-                                onkeyup="textCounter(this,this.form.counter,255);" name="reply" id="reply" required
+                                onkeyup="textCounter(this,this.form.counter,255);" name="reply" id="reply" 
                                 placeholder="Comment...">
-                </textarea>
+                            </textarea>
+                    <div class="publish-errors-reply text-sm text-red-500 font-semibold text-left"></div>
+
+                        </div>
+                        <div class="flex justify-end items-center">
                             <div class="counter-3">
-                                <input class="absolute text-blue-300 z-30"
-                                    style="right:78px;bottom:-44px;background:none"
+                                <input class="text-blue-300 z-30"
+                                    style="width:44px;background:none"
                                     onblur="textCounter(this.form.recipients,this,255);" disabled onfocus="this.blur();"
                                     tabindex="999" maxlength="3" size="3" value="255" name="counter">
                             </div>
-                        </div>
-                        @error('reply')
-                        <p class="text-sm text-red-500">{{ $message }}</p>
-                        @enderror
-                        <div class="flex justify-end">
                             <button id="save-comment"
                                 class="mr-3 cursor-pointer rounded-full font-semibold bg-blue-500 px-6 py-2 text-white hover:bg-blue-400 block shadow"
                                 type="submit">

@@ -308,21 +308,6 @@ $(document).on('submit', '.retweet-comment-form', function (event) {
     });
 });
 
-// .fail(function(xhr) {
-//     $.each(xhr.responseJSON.errors, function(index, val) {
-//         // console.log(xhr.responseJSON.errors);
-//         $('[name=' + index + ']');
-
-//         if(xhr.responseJSON.errors['image']) { // max 4 files accepted! string
-//             $('.gallery').children().remove();
-//         }
-//         // with this you can show all errors
-//         $.each(val, function(i, error) {
-//             $('.publish-errors').html(error);
-//         });
-//     });
-// });
-
 // SHOW "REPLYING TO" POPUP - add original tweet to popup
 $(document).on('click', '.comment', function (event) {
     event.preventDefault();
@@ -343,7 +328,8 @@ $(document).on('click', '.comment', function (event) {
             '__token': token
         }
     }).done(function (response) {
-
+        console.log(response['datetime']);
+        console.log(response['reposted_datetime']);
         function popupContent(avatar, name, username, datetime, body) {
             $('.original-poster').attr('src', `${response[avatar]}`);
             $('.response-name').text(`${response[name]}`);
@@ -363,8 +349,8 @@ $(document).on('click', '.comment', function (event) {
 
         // Check if it's a retweet or an original
         if (response['comment']) {
-            popupContent('reposter_avatar', 'reposter_name', 'reposter_username', 'reposter_datetime', 'comment');        
-            $(`<div class="original-tweet border border-gray-400 rounded-xlt p-3 mt-2"><div class="flex items-center"><img class="rounded-full object-cover mr-2" style="width:20px;height:20px" src="${response['avatar']}"><div class="mr-2 font-bold">${response['name']}</div><div class="text-gray-600 mr-1">${response['username']}</div><div class="text-gray-600">&middot; ${response['datetime']}</div></div><div class="word-break">${response['body']}</div></div>`).insertAfter('.response-body');
+            popupContent('reposter_avatar', 'reposter_name', 'reposter_username', 'reposted_datetime', 'comment');        
+            $(`<div class="original-tweet border border-gray-400 rounded-xlt p-3 mt-2 mr-3"><div class="flex items-center"><img class="rounded-full object-cover mr-2" style="width:20px;height:20px" src="${response['avatar']}"><div class="mr-2 font-bold">${response['name']}</div><div class="text-gray-600 mr-1">${response['username']}</div><div class="text-gray-600">&middot; ${response['datetime']}</div></div><div class="word-break">${response['body']}</div></div>`).insertAfter('.response-body');
             calcHeight();
         } else {
             popupContent('avatar', 'name', 'username', 'datetime','body');
@@ -396,6 +382,15 @@ $(document).on('submit', '.comment-form', function (event) {
         $('.comment-form').removeAttr('action');
         $("body").css("overflow", "visible");
         $(".load-tweets").load(`${url} .load-tweets-ajax`);
+    }).fail(function(xhr) {
+        console.log(xhr.responseJSON.errors);
+        $.each(xhr.responseJSON.errors, function(index, val) {
+            $('[name=' + index + ']');
+            $.each(val, function(i, error) {
+                $('.publish-errors-reply').html(error);
+            });
+        });
+
     });
 });
 
