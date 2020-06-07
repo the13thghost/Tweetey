@@ -1,4 +1,4 @@
-## Tweetey, a social media clone
+# Tweetey
 
 Tweetey is a social media clone, intended to mimick the popular features on Twitter. Some of these features include:
 
@@ -8,6 +8,12 @@ Tweetey is a social media clone, intended to mimick the popular features on Twit
 - Retweeting with comments
 - Replying on tweets/retweets
 - Viewing threads
+
+## Prequisites
+
+PHP
+MySQL
+Apache
 
 ## Install
 

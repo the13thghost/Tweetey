@@ -1,6 +1,6 @@
 <div class="{{ $loop->last ? '' : 'border-b-1' }} border-gray-300 py-3 hover:bg-gray-blue">
     {{-- check if value exists in retweeted from which means its a retweetet, and check if comment is null, which means a tweet without a comment --}}
-    @if(!is_null($tweet->retweeted_from) && is_null($tweet->comment))
+    @if(!is_null($tweet->retweeted_from) && is_null($tweet->comment)) 
     <div class="flex ml-4 items-center mb-1">
         <div class="text-right" style="width:44px;padding-left:30px">
             <svg viewBox="0 0 20 20" class="w-4 text-gray-500">
@@ -44,71 +44,75 @@
                 @else
                 {{ '@' . $tweet->user->username }}
                 @endif
-            </span>
-            {{-- calculate if tweet is more than 24 hours old, if so show diff format --}}
+            </span> 
+            {{-- Time of tweet --}}
             <span class="text-gray-600">&middot;
                 @if(!is_null($tweet->retweeted_from) && is_null($tweet->comment))
+                @if($tweet->retweetOrigi()->created_at < $yesterday)
+                    {{ $tweet->retweetOrigi()->created_at->format('M d, Y') }} 
+                @else
+                {{ $tweet->created_at->diffForHumans() }} 
+                @endif 
+                @elseif($tweet->created_at < $yesterday) 
+                    {{ $tweet->created_at->format('M d, Y') }} 
+                @else
+                    {{ $tweet->created_at->diffForHumans() }} 
+                @endif 
+            </span> 
+            {{-- Retweet without comment --}}
+            @if(!is_null($tweet->retweeted_from) && is_null($tweet->comment))
+            <div class="word-break">{{ $tweet->retweetOrigi()->body }}</div>
+            {{-- Retweet with comment --}}
+            @elseif(!is_null($tweet->retweeted_from) && !is_null($tweet->comment))
+            <div class="mb-2">{{$tweet->comment}}</div>
+            <div class="border border-gray-400 rounded-xlt p-3">
+                <div class="flex items-center" style="font-size:15px">
+                    <div>
+                        <img class="rounded-full object-cover mr-2" style="width:20px;height:20px"
+                            src="{{ $tweet->retweetOrigi()->user->avatar }}">
+                        </div>
+                    <div class="mr-2 font-bold">{{ $tweet->retweetOrigi()->user->name }}</div>
+                    <div class="text-gray-600 mr-1">{{'@' . $tweet->retweetOrigi()->user->username}}</div>
+                    <div class="text-gray-600">&middot;
                     @if($tweet->retweetOrigi()->created_at < $yesterday)
                     {{ $tweet->retweetOrigi()->created_at->format('M d, Y') }} 
+                    @else
+                    {{ $tweet->retweetOrigi()->created_at->diffForHumans() }} 
                     @endif 
-                @elseif($tweet->created_at < $yesterday) 
-                {{ $tweet->created_at->format('M d, Y') }} 
-                        @else
-                        {{ $tweet->created_at->diffForHumans() }} 
-                @endif 
-            </span> {{-- a retweet without comment --}}
-                        @if(!is_null($tweet->retweeted_from) && is_null($tweet->comment))
-                        <div class="word-break">{{ $tweet->retweetOrigi()->body }}</div>
-                        {{-- a retweet with comment --}}
-                        @elseif(!is_null($tweet->retweeted_from) && !is_null($tweet->comment))
-                        <div class="mb-2">{{$tweet->comment}}</div>
-                        <div class="border border-gray-400 rounded-xlt p-3">
-                            <div class="flex items-center" style="font-size:15px">
-                                <div>
-                                    <img class="rounded-full object-cover mr-2" style="width:20px;height:20px"
-                                        src="{{ $tweet->retweetOrigi()->user->avatar }}">
-                                </div>
-                                <div class="mr-2 font-bold">{{ $tweet->retweetOrigi()->user->name }}</div>
-                                <div class="text-gray-600 mr-1">{{'@' . $tweet->retweetOrigi()->user->username}}</div>
-                                <div class="text-gray-600">&middot;
-                                    @if($tweet->retweetOrigi()->created_at < $yesterday)
-                                        {{ $tweet->retweetOrigi()->created_at->format('M d, Y') }} @else
-                                        {{ $tweet->retweetOrigi()->created_at->diffForHumans() }} @endif </div> </div>
-                                        <div>
-                                        {{ $tweet->retweetOrigi()->body }}
-                                        @if(!is_null($tweet->retweeted_from) AND !is_null($tweet->comment))
-                                        @if($tweet->retweetOrigi()->images->isNotEmpty())
-                                        <x-images-layout :tweet="$tweet->retweetOrigi()"></x-images-layout>
-                                        @endif
-                                        @endif
-                                </div>
-                            </div>
-                            @else
-                            <div class="word-break">
-                                {{ $tweet->body }}
-
-                            </div>
-                            @endif
-                            <div class="block items-center">
-                                <div>
-                                    {{-- heeeeeeeeeeeeeeeeeeeeeeeeeeere --}}
-                                    @if(!is_null($tweet->retweeted_from) AND is_null($tweet->comment))
-                                    @if($tweet->retweetOrigi()->images->isNotEmpty())
-                                    <x-images-layout :tweet="$tweet->retweetOrigi()"></x-images-layout>
-                                    @endif
-                                    @else
-                                    @if($tweet->images->isNotEmpty())
-                                    <x-images-layout :tweet="$tweet"></x-images-layout>
-                                    @endif
-                                    @endif
-                                </div>
-                                <div class="flex items-center mt-3">
-                                    <x-tweet-social-options :tweet="$tweet"></x-tweet-social-options>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- menu --}}
-                        <x-tweet-options :tweet="$tweet"></x-tweet-options>
+                    </div> 
+                </div>
+                <div>
+                {{ $tweet->retweetOrigi()->body }}
+                @if(!is_null($tweet->retweeted_from) AND !is_null($tweet->comment))
+                @if($tweet->retweetOrigi()->images->isNotEmpty())
+                    <x-images-layout :tweet="$tweet->retweetOrigi()"></x-images-layout>
+                @endif
+                @endif
+                </div>
+            </div>
+            @else
+            <div class="word-break">
+                {{ $tweet->body }}
+            </div>
+            @endif
+            <div class="block items-center">
+                <div>
+                    @if(!is_null($tweet->retweeted_from) AND is_null($tweet->comment))
+                    @if($tweet->retweetOrigi()->images->isNotEmpty())
+                    <x-images-layout :tweet="$tweet->retweetOrigi()"></x-images-layout>
+                    @endif
+                    @else
+                    @if($tweet->images->isNotEmpty())
+                    <x-images-layout :tweet="$tweet"></x-images-layout>
+                    @endif
+                    @endif
+                </div>
+                <div class="flex items-center mt-3">
+                    <x-tweet-social-options :tweet="$tweet"></x-tweet-social-options>
+                </div>
+            </div>
+        </div>
+        <x-tweet-options :tweet="$tweet"></x-tweet-options>
         </div>
     </div>
     <hr class="line">

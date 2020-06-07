@@ -20,8 +20,6 @@ class CreateRetweetsTable extends Migration
             $table->boolean('comment')->default(0);
             $table->timestamps();
 
-            // $table->unique(['tweet_id', 'user_id']);
-
             $table->foreign('tweet_id')->references('id')->on('tweets')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 

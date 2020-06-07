@@ -44,7 +44,7 @@ class User extends Authenticatable
     public function getAvatarAttribute($value) {
         //return 'https://i.pravatar.cc/120';
         if(empty($value)) {
-            return asset('/images/universal.png');
+            return asset('/images/universal.png'); // universal photo if user has not selected a profile image
         }
         return asset('/storage/' . $value);
     }
@@ -64,11 +64,8 @@ class User extends Authenticatable
         return $this->tweets()->latest()->first()->created_at->diffForHumans();
     }
 
-    public function timeline() { // this is only for me for auth user
-        // i want all mine tweets as well as of my friends
-        //1. get all my tweets via tweets(), find out who i am following and get their tweets, org by latest
-        //2. get my id, get ids of my friends via follows() put in an array get tweets wherein org by latest <-
-
+    public function timeline() {  
+        // show auth user tweets and tweets from user he/she follows
         $friends = $this->follows->pluck('id');
         $timeline = $friends->push($this->id);
         return Tweet::whereIn('user_id', $timeline)->withLikes()->latest()->paginate(15);
@@ -79,13 +76,12 @@ class User extends Authenticatable
     }
 
     public function likes() {
-        return $this->hasMany(Like::class); // shows all the connections collection to likes table both likes/dislikes
+        return $this->hasMany(Like::class); 
     }
 
-    public function retweets() { // all that user has retweeted
+    public function retweets() { 
         return $this->hasMany(Retweet::class);
     }
-
 
     public function retweeted(Tweet $tweet) {
         return $this->retweets()->where('tweet_id', $tweet->retweeted_from)->where('comment', 0)->exists();
@@ -103,6 +99,4 @@ class User extends Authenticatable
         return $this->retweets()->where('tweet_id', $tweet->id)->where('comment', 1)->exists();
 
     }
-  
-
 }

@@ -12,8 +12,8 @@
             </g>
         </svg>
     </button>
-
 </form>
+
 <div class="load-here-{{ $tweet->id }} text-sm text-gray-500 w-4">
     <div class="load-ajax-{{ $tweet->id }}">@if($tweet->likes != 0){{ $tweet->likes }}@endif</div>
 </div>
@@ -32,6 +32,7 @@
         </svg>
     </button>
 </form>
+
 <div class="load-here-dis-{{ $tweet->id }} text-sm text-gray-500 w-4">
     <div class="load-ajax-dis-{{ $tweet->id }}">@if($tweet->dislikes != 0){{ $tweet->dislikes }}@endif</div>
 </div>

@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class TweetsLikeController extends Controller
 {
-    //
     public function storeLike(Tweet $tweet, User $user) {
         $tweet->toggleLike($user ? $user->id : auth()->id());
         return back();

@@ -14,8 +14,6 @@ class AddCommentToTweetsTable extends Migration
     public function up()
     {
         Schema::table('tweets', function (Blueprint $table) {
-            //
-
             $table->string('comment')->nullable();
         });
     }
@@ -28,7 +26,6 @@ class AddCommentToTweetsTable extends Migration
     public function down()
     {
         Schema::table('tweets', function (Blueprint $table) {
-            //
             $table->dropColumn('comment');
         });
     }

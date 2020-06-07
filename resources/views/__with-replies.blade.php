@@ -1,10 +1,12 @@
 @forelse($tweets as $tweet)
         
-    <!-- file for showing only replies (structure )on tweets of certain users -->
     @include('__replies')
-    <!-- i need a new file here because the tweet structure will not be the same, __tweet-replies -->
-        
 
 @empty
-    <p>You don't have any tweets yet!</p>
+@can('noTweetsMsg', $user)
+<div class="text-lg text-center m-3 text-gray-500">You don't have any replies yet</div>
+@endcan
+@cannot('NoTweetsMsg', $user)
+<div class="text-lg text-center m-3 text-gray-500">No replies yet</div>
+@endcannot
 @endforelse 

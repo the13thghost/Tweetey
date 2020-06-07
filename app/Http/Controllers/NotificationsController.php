@@ -12,7 +12,6 @@ class NotificationsController extends Controller
         // $notification->markAsRead();
         // return 
         // request()->user()->notify(new TweetPublished); // insert in notifications table, display the content via ajax
-        // use this rather for real notifcation
         // {{current_user()->notifications->first()->data['tweet published']}}
     }
 }

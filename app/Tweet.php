@@ -23,7 +23,7 @@ class Tweet extends Model
         return $this->hasMany(Image::class);
     }
 
-    public function retweets() { // like for counting how many retweets has one tweet
+    public function retweets() { 
         return $this->hasMany(Retweet::class);
     }
 
@@ -37,8 +37,6 @@ class Tweet extends Model
 
     public function retweetsFromAuthUser() {
         return $this->user->is(auth()->user()) && !is_null($this->retweeted_from) && is_null($this->comment);
-    }
-   
-    
+    }   
 }
 

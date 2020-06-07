@@ -22,18 +22,10 @@
 </head>
 <body>
     <div id="app">
-    {{-- <section class="px-4 py-4 mb-6">
-        <header class="container mx-auto">
-    <img src="{{asset('/images/logo.png')}}" alt="logo" width="140px">
-        </header>
-    </section> --}}
     {{$slot}}
     </div>
     <script rel="javascript" type="text/javascript" href="{{asset('js/ajax.js')}}"></script>
-
-    {{-- <script src="http://unpkg.com/turbolinks"></script> --}}
     <script src="{{ asset('js/main.js') }}" defer></script>
-
     <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/ajax.js') }}" defer></script>
 </body>

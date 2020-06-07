@@ -1,89 +1,93 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Twitter</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <title>Twitter</title>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
-            .full-height {
-                height: 100vh;
-            }
+    <!-- Styles -->
+    <style>
+        html,
+        body {
+            background-color: #fff;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 200;
+            height: 100vh;
+            margin: 0;
+        }
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+        .full-height {
+            height: 100vh;
+        }
 
-            .position-ref {
-                position: relative;
-            }
+        .flex-center {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+        .position-ref {
+            position: relative;
+        }
 
-            .content {
-                text-align: center;
-            }
+        .top-right {
+            position: absolute;
+            right: 10px;
+            top: 18px;
+        }
 
-            .title {
-                font-size: 84px;
-                color: #4299e1;
-            }
+        .content {
+            text-align: center;
+        }
 
-            .links > a {
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-                color: black;
-            }
+        .title {
+            font-size: 84px;
+            color: #4299e1;
+        }
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
+        .links>a {
+            padding: 0 25px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: .1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            color: black;
+        }
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
+        .m-b-md {
+            margin-bottom: 30px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="flex-center position-ref full-height">
+        @if (Route::has('login'))
+        <div class="top-right links">
+            @auth
+            <a href="{{ url('/home') }}">Home</a>
+            @else
+            <a href="{{ route('login') }}">Login</a>
+
+            @if (Route::has('register'))
+            <a href="{{ route('register') }}">Register</a>
             @endif
-
-            <div class="content">
-                <div class="title m-b-md text-blue-900">
-                    Twitter
-                </div>
+            @endauth
+        </div>
+        @endif
+        <div class="content">
+            <div class="title m-b-md text-blue-900">
+                Twitter
             </div>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>
