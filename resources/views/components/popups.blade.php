@@ -116,6 +116,7 @@
                         <span class="text-gray-600">&middot;</span>
                         <span class="text-gray-600 datetime"></span>
                         <div class="response-body word-break-popup"></div>
+                        {{-- <x-images-layout></x-images-layout> --}}
                         <div class="mt-2">
                             <span class="text-gray-600">Replying to </span>
                             <span class="response-username text-blue-900"></span>

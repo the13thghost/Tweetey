@@ -71,7 +71,7 @@
                 @if(current_user()->is($user))
                 @if($user->bio)
                 <div class="user-bio word-break">{{$user->bio}}</div>
-                <div class="cursor-pointer open-bio text-sm text-blue-500">Change</div>
+                <div class="cursor-pointer open-bio text-sm text-blue-500 inline">Change</div>
                 @else
                 <div class="user-bio text-gray-500">Tell people more about yourself</div>
                 <div class="cursor-pointer open-bio text-sm text-blue-500">Add bio</div>

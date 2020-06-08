@@ -53,7 +53,7 @@ class User extends Authenticatable
         if(empty($value)) {
             return asset('/images/cover-universal.png');
         }
-        return asset('/storage/' . $value);
+        return asset('/storage/' . $value); 
     }
 
     public function tweets() {

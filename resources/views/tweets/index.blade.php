@@ -56,6 +56,8 @@
                             @if(!is_null($tweet->retweeted_from) && is_null($tweet->comment))
                             @if($tweet->retweetOrigi()->created_at < $yesterday)
                                 {{ $tweet->retweetOrigi()->created_at->format('M d, Y') }} 
+                            @else
+                            {{ $tweet->created_at->diffForHumans() }} 
                             @endif 
                             @elseif($tweet->created_at < $yesterday) 
                                 {{ $tweet->created_at->format('M d, Y') }} 

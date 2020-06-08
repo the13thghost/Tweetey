@@ -28,7 +28,7 @@ class TweetController extends Controller
     }
 
         
-        
+    //thread
     public function show(Tweet $tweet) {
         if(is_null($tweet->retweeted_from)) {
             $tweet = $tweet;
