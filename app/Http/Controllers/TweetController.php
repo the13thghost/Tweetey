@@ -163,11 +163,28 @@ class TweetController extends Controller
         }
     }
 
+    // Check if images collection is empty > if so no need to render a view 
+    public function imgEmpty($imgParam, $varParam) {
+        
+        // $images = Image::where('tweet_id', request('id'))->get();
+        // $tweet = Tweet::where('id', request('id'))->first();
+        // $images1 = Tweet::where('id', $tweet->retweeted_from)->first();
+        
+        if($imgParam->isEmpty()) {
+            return 0;
+        } else {
+            return view('/components/images-layout-sm', [
+                'tweet' => $varParam
+            ])->render();
+        }
+    }
+
     public function getTweet() {
         //get the time the tweet was created and convert accordingly
         $yesterday = Carbon::now()->subDay(); // calculate if tweet is more than 24 hours old
-
         $tweet = Tweet::where('id', request('id'))->first();
+        $images = Image::where('tweet_id', request('id'))->get();
+
         if($tweet->created_at < $yesterday) {
             $datetime = $tweet->created_at->format('M d, Y');
         } else {
@@ -180,11 +197,14 @@ class TweetController extends Controller
                 'name' => $tweet->user->name,
                 'avatar' => $tweet->user->avatar,
                 'username' => $tweet->user->username,
-                'datetime' => $datetime
-
+                'datetime' => $datetime,
+                'images' => $this->imgEmpty($images, $tweet)
             ]);
         } elseif(!is_null($tweet->retweeted_from)) { // a retweet with a comment
+            
             $tweet1 = Tweet::where('id', $tweet->retweeted_from)->first();
+            $images1 = Image::where('tweet_id', $tweet->retweeted_from)->get();
+
             if($tweet1->created_at < $yesterday) {
                 $datetime1 = $tweet1->created_at->format('M d, Y');
             } else {
@@ -201,7 +221,8 @@ class TweetController extends Controller
                 'reposter_name' =>$tweet->user->name,
                 'reposter_avatar' => $tweet->user->avatar,
                 'reposter_username' => $tweet->user->username,
-                'reposted_datetime' => $datetime
+                'reposted_datetime' => $datetime,
+                'images' => $this->imgEmpty($images1, $tweet1)
             ]);
         }
     }

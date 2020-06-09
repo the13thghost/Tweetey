@@ -184,6 +184,7 @@ $('#publish').on('submit', function (event) {
             $('.gallery').children().remove();
             $(".counter-1").load(`${url}  .counter-fresh`);
             $(".tweets-1").load(`${url}  .tweets-fresh`);
+            $('#gallery-photo-add').val(''); //empty out the input
         });
 
         $(".notify-published").fadeIn(function () {
@@ -257,14 +258,23 @@ $(document).on('click', '.retweet-comment', function (event) {
             '__token': token
         }
     }).done(function (response) {
+        console.log(response['images']);
         let array = response['body'];
         let splittedArr = array.split("");
         splittedArr.splice(100);
         splittedArr.push('...');
-        let joined = splittedArr.join("");
-        // $div = `<div class="text-sm text-left border border-gray-300 rounded-lg p-2 mb-3 before-div word-break-popup" style="max-width:500px">${joined}</div>`;
-        $div = `<div class="original-tweet before-div border border-gray-400 rounded-xlt p-3 mt-2 mb-3 mr-3"><div class="flex items-center"><img class="rounded-full object-cover mr-2" style="width:20px;height:20px" src="${response['avatar']}"><div class="mr-2 font-bold">${response['name']}</div><div class="text-gray-600 mr-1">${response['username']}</div><div class="text-gray-600">&middot; ${response['datetime']}</div></div><div class="word-break text-left">${response['body']}</div></div>`;
+        splittedArr.join("");
+
+        function imgEmpty(param) {
+            if(response['images'] != 0) {
+                $(`<div class="images-comment"></div>`).insertAfter(param);
+                $('.images-comment').html(response['images']);
+            }
+        }
+
+        $div = `<div class="original-tweet-comment before-div border border-gray-400 rounded-xlt p-3 mt-2 mb-3 mr-3"><div class="flex items-center"><img class="rounded-full object-cover mr-2" style="width:20px;height:20px" src="${response['avatar']}"><div class="mr-2 font-bold">${response['name']}</div><div class="text-gray-600 mr-1">${response['username']}</div><div class="text-gray-600">&middot; ${response['datetime']}</div></div><div class="word-break text-left res-ori-body-comment">${response['body']}</div></div>`;
         $('textarea.mention').after($div);
+        imgEmpty('.res-ori-body-comment');
         $('.retweet-comment-form').attr('action', `/retweets/${response['id']}/comment`);
     });
 });
@@ -328,8 +338,7 @@ $(document).on('click', '.comment', function (event) {
             '__token': token
         }
     }).done(function (response) {
-        console.log(response['datetime']);
-        console.log(response['reposted_datetime']);
+
         function popupContent(avatar, name, username, datetime, body) {
             $('.original-poster').attr('src', `${response[avatar]}`);
             $('.response-name').text(`${response[name]}`);
@@ -347,13 +356,23 @@ $(document).on('click', '.comment', function (event) {
             $('.comment-form').attr('action', `/replies/${response['id']}`);
         }
 
+        function imgEmpty(param) {
+            if(response['images'] != 0) {
+                $(`<div class="images-reply"></div>`).insertAfter(param);
+                $('.images-reply').html(response['images']);
+            }
+        }
+
         // Check if it's a retweet or an original
         if (response['comment']) {
             popupContent('reposter_avatar', 'reposter_name', 'reposter_username', 'reposted_datetime', 'comment');        
-            $(`<div class="original-tweet border border-gray-400 rounded-xlt p-3 mt-2 mr-3"><div class="flex items-center"><img class="rounded-full object-cover mr-2" style="width:20px;height:20px" src="${response['avatar']}"><div class="mr-2 font-bold">${response['name']}</div><div class="text-gray-600 mr-1">${response['username']}</div><div class="text-gray-600">&middot; ${response['datetime']}</div></div><div class="word-break">${response['body']}</div></div>`).insertAfter('.response-body');
+            $(`<div class="original-tweet border border-gray-400 rounded-xlt p-3 mt-2 mr-3"><div class="flex items-center"><img class="rounded-full object-cover mr-2" style="width:20px;height:20px" src="${response['avatar']}"><div class="mr-2 font-bold">${response['name']}</div><div class="text-gray-600 mr-1">${response['username']}</div><div class="text-gray-600">&middot; ${response['datetime']}</div></div><div class="word-break res-ori-body">${response['body']}</div></div>`).insertAfter('.response-body');
+            imgEmpty('.res-ori-body');
             calcHeight();
+            
         } else {
             popupContent('avatar', 'name', 'username', 'datetime','body');
+            imgEmpty('.response-body');
             calcHeight();
         }
     });
@@ -550,6 +569,7 @@ $(document).on('submit', '.comment-form', function (event) {
                 // $(document).ajaxComplete(function(){ when ajax completes the request stop animatino loading spinner
                 //     $(".load-tweets").css("background", "white");
                 //   });
+                console.log(response['with-replies']);
                 history.pushState({}, null, `/profile/${joined}/with-replies`);
                 $(".load-tweets").html(response['with-replies']);
 

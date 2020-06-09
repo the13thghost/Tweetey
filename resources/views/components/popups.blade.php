@@ -23,7 +23,7 @@
                         <textarea class="mention w-full block mb-3 p-2 text-xl append-body"
                             onblur="textCounter(this,this.form.counter,255);"
                             onkeyup="textCounter(this,this.form.counter,255);" name="body" id="body"
-                            placeholder="What's happening?"></textarea>
+                            placeholder="Comment..."></textarea>
                     </div>
                     <div class="publish-errors-comment text-sm text-red-500 font-semibold text-left"></div>
                     <div class="flex justify-end items-center">
@@ -90,7 +90,7 @@
     </div>
 
     {{-- Popup to reply --}}
-    <div class="comment-overlay  border-t border-gray-300" style="height:auto">
+    <div class="comment-overlay border-t border-gray-300" style="height:auto">
         <div style="height:53px" class="border-l border-r border-b border-gray-300 sticky top-0 z-10 bg-white">
             <div class="close text-left py-4 ml-3">
                 <svg viewBox="0 0 20 20" class="w-5 text-blue-900">
@@ -146,7 +146,7 @@
                             <button id="save-comment"
                                 class="mr-3 cursor-pointer rounded-full font-semibold bg-blue-500 px-6 py-2 text-white hover:bg-blue-400 block shadow"
                                 type="submit">
-                                Save
+                                Reply
                             </button>
                         </div>
                     </form>

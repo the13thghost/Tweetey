@@ -55,6 +55,7 @@ $(document).ready(function() {
                 $(".publish-errors-comment").html('');
                 $('.counter-1 input').val(255);
                 $('.before-div').remove();
+                $('.images-comment').remove();
                 $(".popup-overlay, .popup-content").removeClass("active");
             }
         });
@@ -64,6 +65,7 @@ $(document).ready(function() {
             $(".popup-overlay, .popup-content").removeClass("active");
             $(".publish-errors-comment").html('');
             $('.counter-1 input').val(255);
+            $('.images-comment').remove();
             $("body").css("overflow", "visible");
         });
     });
@@ -83,6 +85,7 @@ $(document).ready(function() {
                 $("body").css("overflow", "visible");
                 $('.counter-3 input').val(255);
                 $('.before1-div').remove();
+                $('.images-reply').remove();
                 $('.original-tweet').remove();
                 $(".comment-overlay, .comment-content").removeClass("active");
             }
@@ -93,6 +96,7 @@ $(document).ready(function() {
             $('.counter-3 input').val(255);
             $(".publish-errors-reply").html('');
             $('.original-tweet').remove();
+            $('.images-reply').remove();
             $("body").css("overflow", "visible");
         });
     });
