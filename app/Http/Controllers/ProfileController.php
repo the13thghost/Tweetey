@@ -81,7 +81,7 @@ class ProfileController extends Controller
         $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
         $replies = Reply::where('user_id', $user->id)->latest()->paginate(10);
         return response()->json([
-            'with-replies' => view('_with-replies',[ 
+            'with-replies' => view('__with-replies',[ 
                 'tweets' => $replies,
                 'user' => $user,
                 'yesterday' => $yesterday

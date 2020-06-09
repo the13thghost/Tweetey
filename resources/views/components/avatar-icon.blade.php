@@ -1,1 +1,1 @@
-<img class="rounded-full object-cover mr-2" style="width:44px;height:44px" src="{{$slot}}">
+<img class="rounded-full object-cover" style="width:44px;height:44px" src="{{$slot}}">

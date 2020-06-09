@@ -22,7 +22,7 @@ class Tweet extends Model
     public function images() {
         return $this->hasMany(Image::class);
     }
-
+ 
     public function retweets() { 
         return $this->hasMany(Retweet::class);
     }

@@ -27,7 +27,7 @@
                 </div>
                 @endif
                 <div class="flex">
-                    <a href="/profile/{{ $tweet->user->username }}" class="flex-shrink-0 ml-4 w-9">
+                    <a href="/profile/{{ $tweet->user->username }}" class="flex-shrink-0 ml-4 w-9 mr-2">
                         <x-avatar-icon :tweet='$tweet' class="ml-2">
                             @if(!is_null($tweet->retweeted_from) && is_null($tweet->comment))
                             {{$tweet->retweetOrigi()->user->avatar}}

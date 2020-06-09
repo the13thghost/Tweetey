@@ -569,7 +569,7 @@ $(document).on('submit', '.comment-form', function (event) {
                 // $(document).ajaxComplete(function(){ when ajax completes the request stop animatino loading spinner
                 //     $(".load-tweets").css("background", "white");
                 //   });
-                console.log(response['with-replies']);
+                console.log(response);
                 history.pushState({}, null, `/profile/${joined}/with-replies`);
                 $(".load-tweets").html(response['with-replies']);
 

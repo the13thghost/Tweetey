@@ -108,7 +108,7 @@
                 <div class="flex mb-3">
                     <a class="flex-shrink-0 w-9 mr-2">
                         <img class="rounded-full object-cover original-poster" style="width:44px;height:44px">
-                        <div class="bg-gray-400 mx-auto mt-1 enter-h"></div>
+                        <div class="bg-gray-400 mx-auto mt-1 enter-h"></div> 
                     </a>
                     <div class="ml-1 mr-2 w-full calc-h text-left">
                         <span class="font-bold response-name"></span>

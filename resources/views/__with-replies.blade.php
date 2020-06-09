@@ -1,6 +1,6 @@
 @forelse($tweets as $tweet)
         
-    @include('__replies')
+    @include('__replies') 
 
 @empty
 @can('noTweetsMsg', $user)
