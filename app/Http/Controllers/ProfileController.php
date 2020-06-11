@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Image;
 use App\Reply;
 use App\Tweet;
 use App\User;
@@ -13,13 +14,14 @@ class ProfileController extends Controller
 {
     public function show(User $user) {
         $yesterday = Carbon::now()->subDay(); // calculate if tweet is more than 24 hours old
-        $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
+        $totalTweets = Tweet::where('user_id', $user->id)->count();
         $tweets = Tweet::withLikes()->where('user_id', $user->id)->latest()->paginate(10);
+
         return view('profile.show', [ 
             'tweets' => $tweets,
             'user' => $user,
             'totalTweets' => $totalTweets,
-            'yesterday' => $yesterday 
+            'yesterday' => $yesterday
         ]);
     }
 
@@ -75,14 +77,14 @@ class ProfileController extends Controller
         ]);
     }
 
-    //dynamic profile nav link : Tweets & Replies
-    public function withRepliesAjax(User $user) {
+    //dynamic profile nav link : Tweets & Replies > have to pass in scopeWithLikes()!
+    public function withRepliesRes(User $user) {
+        
         $yesterday = Carbon::now()->subDay(); 
-        $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
         $replies = Reply::where('user_id', $user->id)->latest()->paginate(10);
         return response()->json([
             'with-replies' => view('__with-replies',[ 
-                'tweets' => $replies,
+                'replies' => $replies,
                 'user' => $user,
                 'yesterday' => $yesterday
             ])->render()
@@ -101,9 +103,63 @@ class ProfileController extends Controller
         ]);
     }
 
-    //dynamic profile nav link : media
+    //dynamic profile nav link : media (show users original tweets with media, no retweets!)
+
+    public function mediaRes(User $user) {
+
+        $yesterday = Carbon::now()->subDay(); 
+        $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
+        $tweets = Tweet::withLikes()->where('user_id', $user->id)->where('retweeted_from', null)->latest()->paginate(10);
+        return response()->json([
+            'media' => view('__media',[ 
+                'user' => $user,
+                'tweets' => $tweets,
+                'total-tweets' => $totalTweets,
+                'yesterday' => $yesterday
+            ])->render()
+        ]);
+    }
+
+    public function media(User $user) {
+        
+        $yesterday = Carbon::now()->subDay(); 
+        $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
+        $tweets = Tweet::withLikes()->where('user_id', $user->id)->latest()->paginate(10);
+        return view('profile.show',[ 
+            'tweets' => $tweets,
+            'user' => $user,
+            'totalTweets' => $totalTweets,
+            'yesterday' => $yesterday 
+        ]);
+    }
 
     //dynamic profile nav link : links
 
+    public function likesRes(User $user) {
+
+        $yesterday = Carbon::now()->subDay(); 
+        $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
+        return response()->json([
+            'likes' => view('__likes',[ 
+                'user' => $user,
+                'tweets' => $user->userLikedTweets(),
+                'total-tweets' => $totalTweets,
+                'yesterday' => $yesterday
+            ])->render()
+        ]);
+    }
+
+    public function likes(User $user) {
+        
+        $yesterday = Carbon::now()->subDay(); 
+        $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
+        $tweets = Tweet::withLikes()->where('user_id', $user->id)->latest()->paginate(10);
+        return view('profile.show',[ 
+            'tweets' => $tweets,
+            'user' => $user,
+            'totalTweets' => $totalTweets,
+            'yesterday' => $yesterday 
+        ]);
+    }
     
 }

@@ -39,5 +39,7 @@
             <x-blue-btn class="float-right inline">Update</x-blue-btn>
             <a href="{{route('profile', auth()->user()->username)}}" class="inline ml-3 hover:underline text-gray-600">Cancel</a>
         </form>
+    <div>
+    </div>
     </section>
 </x-app>

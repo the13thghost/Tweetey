@@ -18,6 +18,15 @@ $(document).ready(function() {
         }
     });
 
+    // Active class on nav links
+
+    $(document).on('click', '.tablist div', function() {
+        // console.log(this);
+        // let me= $('.tablist div.active-class')[0];
+        $('div').removeClass('active-link');
+        $(this).addClass("active-link");
+    });
+
     // Show popup div for retweeting 
     $(document).on('click', '.retweet-click', function () { 
         $edit = $(this).get(0); 

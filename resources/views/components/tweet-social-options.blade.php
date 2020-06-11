@@ -1,4 +1,5 @@
 <x-like-btns :tweet="$tweet"></x-like-btns>
+
 {{-- Comment btn --}}
 <div class="w-1/4 text-center ">
     <a href="/tweet/{{$tweet->id}}" data-id="{{ $tweet->id }}" class="cursor-pointer comment open-comment">

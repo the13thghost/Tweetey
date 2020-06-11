@@ -24,6 +24,11 @@ body {
   margin: 0;
 }
 
+.active-link {
+    color: #1da1f2;
+    background-color: #ebf8ff;
+}
+
 .text-blue-tweet {
   color: #1da1f2;
 }

@@ -76,7 +76,7 @@ trait Likable {
         if((bool) $arr == true) {
             return true;
         }
-        return false;
+        return false; 
     }
 
     public function scopeWithLikes() { 
@@ -84,4 +84,11 @@ trait Likable {
         return $this->leftJoinSub('SELECT tweet_id, sum(`like`) `likes`, sum(`dislike`) `dislikes` FROM `likes` group by tweet_id',
         'likes', 'tweets.id', 'likes.tweet_id'); 
     }    
+
+    public function scopeWithUpdatedAt() {
+        return $this->leftJoinSub('SELECT tweet_id, updated_at AS updated_at_likes FROM likes', 'likes', 'tweets.id', 'likes.tweet_id');
+    }
+
+    // select * from `tweets` left join (select `tweet_id`, `updated_at` AS `updated_at_likes` from `likes`) 
+    // likes on tweets.id = likes.tweet_id
 }

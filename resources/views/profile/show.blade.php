@@ -22,6 +22,7 @@
             </div>
         </div>
     </x-top-bar>
+
     <section>
         <div class="relative">
             <img src="{{ $user->cover }}" alt="cover photo" style="height:250px;width:720px" class="object-cover z-10">
@@ -90,16 +91,16 @@
             </div>
             <div class="flex items-center cursor-pointer tablist mt-3 font-bold text-gray-600 w-full">
                 <div
-                    class="profile-tweets w-1/4 text-center hover:text-blue-900 hover:bg-blue-100 hover:border-b-2 hover:border-red-400 py-4">
+                    class="{{Request::is('profile/' . $user->username) ? 'active-link' : ''}} profile-tweets w-1/4 text-center hover:text-blue-900 hover:bg-blue-100 hover:border-b-2 hover:border-red-400 py-4">
                     Tweets</div>
                 <div
-                    class="with-replies w-1/4 text-center hover:text-blue-900 hover:bg-blue-100 hover:border-b-2 hover:border-red-400 py-4 tweets-and-replies">
-                    Tweets & Replies</div>
+                    class="{{Request::is('profile/' . $user->username . '/with-replies') ? 'active-link' : ''}} with-replies w-1/4 text-center hover:text-blue-900 hover:bg-blue-100 hover:border-b-2 hover:border-red-400 py-4 tweets-and-replies">
+                    Replies</div>
                 <div
-                    class="w-1/4 text-center hover:text-blue-900 hover:bg-blue-100 hover:border-b-2 hover:border-red-400 py-4">
+                    class="{{Request::is('profile/' . $user->username . '/media') ? 'active-link' : ''}} media w-1/4 text-center hover:text-blue-900 hover:bg-blue-100 hover:border-b-2 hover:border-red-400 py-4">
                     Media</div>
                 <div
-                    class="w-1/4 text-center hover:text-blue-900 hover:bg-blue-100 hover:border-b-2 hover:border-red-400 py-4">
+                    class="{{Request::is('profile/' . $user->username . '/likes') ? 'active-link' : ''}} likes-nav w-1/4 text-center hover:text-blue-900 hover:bg-blue-100 hover:border-b-2 hover:border-red-400 py-4">
                     Likes</div>
             </div>
 

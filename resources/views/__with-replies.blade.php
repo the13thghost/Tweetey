@@ -1,4 +1,4 @@
-@forelse($tweets as $tweet)
+@forelse($replies as $reply)
         
     @include('__replies') 
 

@@ -18,9 +18,17 @@ Route::middleware('auth')->group(function() {
     Route::post('/retweets/{tweet}/comment', 'TweetController@retweetComment');
     Route::put('/profile/{user}/bio', 'ProfileController@updateBio');
     Route::post('/replies/{tweet}', 'ReplyController@store');
-    Route::get('/profile/{user:username}/with-replies-ajax', 'ProfileController@withRepliesAjax');
+    //dynamic nav
+    Route::get('/profile/{user:username}/with-replies-res', 'ProfileController@withRepliesRes');
     Route::get('/profile/{user:username}/with-replies', 'ProfileController@withReplies');
     Route::get('/profile/{user:username}/tweets', 'ProfileController@tweetsNav');
+    Route::get('/profile/{user:username}/media-res', 'ProfileController@mediaRes');
+    Route::get('/profile/{user:username}/media', 'ProfileController@media');
+    Route::get('/profile/{user:username}/likes-res', 'ProfileController@likesRes');
+    Route::get('/profile/{user:username}/likes', 'ProfileController@likes');
+
+
+
     Route::delete('/unretweets/{tweet}', 'TweetController@unretweet');
     Route::post('/profile/{user:username}/follow', 'FollowsController');
     Route::get('/profile/{user:username}', 'ProfileController@show')->name('profile');

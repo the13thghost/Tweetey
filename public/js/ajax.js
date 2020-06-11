@@ -534,12 +534,7 @@ $(document).on('submit', '.comment-form', function (event) {
     $(document).ready(function () {
         $(document).on('click', '.with-replies', function (e) {
             e.preventDefault();
-
-            // $(document).ajaxStart(function(){ start animation while ajax fetches the data
-            //     // $(".load-tweets").children().hide();
-            //     // $(".lds-spinner").show();
-            //   });
-
+        
             let url = window.location.pathname;
             let splitted = url.split("");
             let spliced = splitted.splice(9);
@@ -562,14 +557,14 @@ $(document).on('submit', '.comment-form', function (event) {
             let joined = arr.join("");
 
             $.ajax({
-                url: `/profile/${joined}/with-replies-ajax`,
+                url: `/profile/${joined}/with-replies-res`,
                 type: 'GET'
 
             }).done(function (response) {
                 // $(document).ajaxComplete(function(){ when ajax completes the request stop animatino loading spinner
                 //     $(".load-tweets").css("background", "white");
                 //   });
-                console.log(response);
+                // console.log(response);
                 history.pushState({}, null, `/profile/${joined}/with-replies`);
                 $(".load-tweets").html(response['with-replies']);
 
@@ -603,6 +598,68 @@ $(document).on('submit', '.comment-form', function (event) {
             }).done(function (response) {
                 history.pushState({}, null, `/profile/${joined}`);
                 $(".load-tweets").html(response['tweets-timeline']);
+
+            });
+        });
+    });
+
+    // media nav link
+    $(document).ready(function () {
+        $(document).on('click', '.media', function (e) {
+            e.preventDefault();
+            let url = window.location.pathname;
+            let splitted = url.split("");
+            let spliced = splitted.splice(9);
+            let arr = [];
+            for (let i = 0; i < spliced.length; i++) {
+                if (spliced[i] == '/') {
+                    break;
+                } else {
+                    arr.push(spliced[i]);
+                }
+            }
+
+            let joined = arr.join("");
+            console.log(joined);
+
+            $.ajax({
+                url: `/profile/${joined}/media-res`,
+                type: 'GET'
+
+            }).done(function (response) {
+                history.pushState({}, null, `/profile/${joined}/media`);
+                $(".load-tweets").html(response['media']);
+
+            });
+        });
+    });
+
+    // likes nav link
+
+    $(document).ready(function () {
+        $(document).on('click', '.likes-nav', function (e) {
+            e.preventDefault();
+            let url = window.location.pathname;
+            let splitted = url.split("");
+            let spliced = splitted.splice(9);
+            let arr = [];
+            for (let i = 0; i < spliced.length; i++) {
+                if (spliced[i] == '/') {
+                    break;
+                } else {
+                    arr.push(spliced[i]);
+                }
+            }
+
+            let joined = arr.join("");
+
+            $.ajax({
+                url: `/profile/${joined}/likes-res`,
+                type: 'GET'
+
+            }).done(function (response) {
+                history.pushState({}, null, `/profile/${joined}/likes`);
+                $(".load-tweets").html(response['likes']);
 
             });
         });

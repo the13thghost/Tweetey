@@ -28,7 +28,7 @@ class Tweet extends Model
     }
 
     public function retweetsNumber() {
-        return $this->retweets->count();
+        return $this->retweets->count(); 
     }
 
     public function retweetOrigi() {
@@ -38,5 +38,6 @@ class Tweet extends Model
     public function retweetsFromAuthUser() {
         return $this->user->is(auth()->user()) && !is_null($this->retweeted_from) && is_null($this->comment);
     }   
+
 }
 
