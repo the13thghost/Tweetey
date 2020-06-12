@@ -86,9 +86,24 @@ trait Likable {
     }    
 
     public function scopeWithUpdatedAt() {
-        return $this->leftJoinSub('SELECT tweet_id, updated_at AS updated_at_likes FROM likes', 'likes', 'tweets.id', 'likes.tweet_id');
+        // return $this->joinSub('SELECT tweet_id, `user_id` updated_at AS `updated_at_likes`, 
+        // `like`, dislike FROM `likes` WHERE `user_id` =' . $param->id, 
+        // 'likes', 'tweets.id', 'likes.tweet_id');
+
+        // return $this->join('likes', 'tweets.id', '=', 'likes.tweet_id')
+        // ->select('tweets.*', 'likes.tweet_id', 'likes.updated_at AS updated_at_likes', 'likes.user_id AS users_id')
+        // ->orderBy('updated_at_likes', 'desc');
+        // return $this->join('SELECT likes.tweet_id, likes.updated_at AS updated_at_likes, sum(`like`) `likes`, sum(`dislike`) `dislikes` FROM `likes` group by tweet_id',
+        // 'likes', 'tweets.id', 'likes.tweet_id')->orderBy('likes.updated_at_likes', 'desc'); 
+        
+        // return $this->join('likes', 'tweets.id', '=', 'likes.tweet_id')
+        // ->select('tweets.*', 'likes.tweet_id', 'likes.updated_at AS updated_at_likes')
+        // ->groupBy('tweet_id')->orderBy('updated_at_likes', 'desc'); 
+
+        return $this->leftJoinSub('SELECT tweet_id, likes.updated_at AS updated_at_likes, sum(`like`) `likes`, sum(`dislike`) `dislikes` FROM `likes` group by tweet_id',
+        'likes', 'tweets.id', 'likes.tweet_id');
     }
 
-    // select * from `tweets` left join (select `tweet_id`, `updated_at` AS `updated_at_likes` from `likes`) 
-    // likes on tweets.id = likes.tweet_id
+    // select * from `tweets` inner join (select `tweet_id`, `user_id`,`updated_at` 
+    // AS `updated_at_likes` from `likes` Where `user_id` = 2) likes on tweets.id = likes.tweet_id 
 }

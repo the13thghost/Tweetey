@@ -133,17 +133,18 @@ class ProfileController extends Controller
         ]);
     }
 
-    //dynamic profile nav link : links
+    //dynamic profile nav link : likes
 
     public function likesRes(User $user) {
 
         $yesterday = Carbon::now()->subDay(); 
-        $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
+        $likesArr = $user->likes->where('like', 1)->pluck('tweet_id'); // get tweets the user has liked, save by tweet_id
+        // left join with likes table, sum likes and dislike, order by updated at from likes table
+        $tweets = Tweet::withUpdatedAt()->whereIn('tweets.id', $likesArr)->orderBy('updated_at_likes', 'DESC')->get();
         return response()->json([
             'likes' => view('__likes',[ 
                 'user' => $user,
-                'tweets' => $user->userLikedTweets(),
-                'total-tweets' => $totalTweets,
+                'tweets' => $tweets,
                 'yesterday' => $yesterday
             ])->render()
         ]);

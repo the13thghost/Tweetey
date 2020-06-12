@@ -1,6 +1,5 @@
 @forelse($tweets as $tweet)
-{{$tweet}}<br><br>
-    {{-- @include('__liked-tweets')   --}}
+    @include('__liked-tweets')  
 @empty
 @can('noTweetsMsg', $user)
 <div class="text-lg text-center m-3 text-gray-500">You don't have any liked tweets yet</div>

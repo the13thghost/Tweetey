@@ -101,7 +101,7 @@
                     @if($tweet->retweetOrigi()->images->isNotEmpty())
                     <x-images-layout :tweet="$tweet->retweetOrigi()"></x-images-layout>
                     @endif
-                    @else
+                    @else 
                     @if($tweet->images->isNotEmpty())
                     <x-images-layout :tweet="$tweet"></x-images-layout>
                     @endif

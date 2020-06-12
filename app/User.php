@@ -102,10 +102,8 @@ class User extends Authenticatable
 
     // Get $user tweets/retweets that he/she liked, order by time of like
     public function userLikedTweets() { 
-        // 1. go to likes table, find likes with the users id, then get the corresponding tweet_id
-        $likesArr = $this->likes->where('like', 1)->pluck('tweet_id');
-        return Tweet::withUpdatedAt()->withLikes()->whereIn('id', $likesArr)->latest()->paginate(10);
-        // need to order by updated_at from likes table -> left join tables and rename column updated_at (likes) to smth else
+        $likesArr = $this->likes->where('like', 1)->pluck('tweet_id'); //which tweets the user liked by tweet_id
+        return Tweet::whereIn('id', $likesArr)->withUpdatedAt()->where('likes.user_id', $this->id)->paginate(10);
 
     }
     
