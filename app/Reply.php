@@ -21,9 +21,9 @@ class Reply extends Model
     }
 
     // from reply get tweet you are replying to > if its a retweet > get the original tweet info
-    public function originalTweet() {
-        return $this->tweet->where('id', $this->tweet->retweeted_from)->first();
-    }
+    // public function originalTweet() {
+    //     return $this->tweet->where('id', $this->tweet->retweeted_from)->first();
+    // }
 
     
 

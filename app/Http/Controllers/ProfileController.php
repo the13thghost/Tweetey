@@ -77,10 +77,22 @@ class ProfileController extends Controller
 
     //dynamic profile nav link : Tweets & Replies > have to pass in scopeWithLikes()!
     public function withRepliesRes(User $user) {
-        $replies = Reply::where('user_id', $user->id)->latest()->paginate(10);
+        //get all tweets that user has replied on: get tweet_id's from replies table save as arr
+        // $replies = Reply::where('user_id', $user->id)->latest()->paginate(10);
+
+        // a user can reply on a tweet multiple times => multiple same tweets
+        $repliesArr = $user->replies->pluck('tweet_id', 'id');
+        $tweets = [];
+        foreach($repliesArr as $item) {
+            $tweet = Tweet::withLikes()->where('tweets.id', $item)->first();
+            array_push($tweets, $tweet);         
+        }
+
+        // $tweets = Tweet::withLikes()->whereIn('tweets.id', $repliesArr)->get();
         return response()->json([
             'with-replies' => view('__with-replies',[ 
-                'replies' => $replies,
+                // 'replies' => $replies,
+                'tweets' => $tweets,
                 'user' => $user,
                 'yesterday' => carbonTime()
             ])->render()

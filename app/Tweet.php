@@ -39,5 +39,9 @@ class Tweet extends Model
         return $this->user->is(auth()->user()) && !is_null($this->retweeted_from) && is_null($this->comment);
     }   
 
+    public function replies() {
+        return $this->hasMany(Reply::class);
+    }
+
 }
 

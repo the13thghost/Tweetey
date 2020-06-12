@@ -1,5 +1,5 @@
-@forelse($replies as $reply)
-        
+@forelse($tweets as $tweet)
+{{-- <div>{{$tweet}}</div><br> --}}
     @include('__replies') 
 
 @empty
