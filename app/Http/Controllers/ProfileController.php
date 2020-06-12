@@ -83,16 +83,18 @@ class ProfileController extends Controller
         // a user can reply on a tweet multiple times => multiple same tweets
         $repliesArr = $user->replies->pluck('tweet_id', 'id');
         $tweets = [];
-        foreach($repliesArr as $item) {
-            $tweet = Tweet::withLikes()->where('tweets.id', $item)->first();
-            array_push($tweets, $tweet);         
+        foreach($repliesArr as $key => $value) {
+            $tweet = Tweet::withLikes()->where('tweets.id', $value)->first();
+            $tweet['reply_id'] = $key;
+            array_push($tweets, $tweet);   
         }
 
+        
         // $tweets = Tweet::withLikes()->whereIn('tweets.id', $repliesArr)->get();
         return response()->json([
             'with-replies' => view('__with-replies',[ 
                 // 'replies' => $replies,
-                'tweets' => $tweets,
+                'tweets' => $tweets, // order by date of reply!! kill me now agaiiiiiiiiiin
                 'user' => $user,
                 'yesterday' => carbonTime()
             ])->render()
@@ -108,6 +110,7 @@ class ProfileController extends Controller
             'totalTweets' => $totalTweets,
             'yesterday' => carbonTime()
         ]);
+
     }
 
     //dynamic profile nav link : media (show users original tweets with media, no retweets)

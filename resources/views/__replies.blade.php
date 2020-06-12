@@ -65,7 +65,7 @@
                     @elseif($tweet->created_at < $yesterday)
                         {{ $tweet->created_at->format('M d, Y') }} @else
                         {{ $tweet->created_at->diffForHumans() }} @endif </span> <div class="word-break">
-                        {{$tweet->replies[0]->reply}}</div>
+                        {{$tweet->replies->where('id', $tweet->reply_id)->first()->reply}}</div>
 
         </div>
     </div> 
