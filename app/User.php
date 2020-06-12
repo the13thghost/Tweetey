@@ -79,6 +79,10 @@ class User extends Authenticatable
         return $this->hasMany(Like::class); 
     }
 
+    public function images() {
+        return $this->hasMany(Image::class);
+    }
+
     public function retweets() { 
         return $this->hasMany(Retweet::class);
     }

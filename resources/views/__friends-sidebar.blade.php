@@ -10,7 +10,7 @@
             @else
             @for ($i = 0; $i < 5; $i++)
             <li class="flex items-center mb-3">
-                <a href="/profile/{{current_user()->follows[$i]->username}}">
+                <a href="/profile/{{current_user()->follows[$i]->username}}" class="mr-2">
                     <x-avatar-icon>{{current_user()->follows[$i]->avatar}}</x-avatar-icon>
                 </a>
                 <a href="/profile/{{current_user()->follows[$i]->username}}">
