@@ -43,12 +43,13 @@
             <div class="word-break">{{$tweet->body}}</div>
             <x-images-layout :tweet="$tweet"></x-images-layout>
             @endif
+            
+            
             <div class="flex items-center mt-3">
                 <x-tweet-social-options :tweet="$tweet"></x-tweet-social-options>
             </div>
-            
-
         </div>
+        
         <x-tweet-options :tweet="$tweet"></x-tweet-options>
     </div>
     

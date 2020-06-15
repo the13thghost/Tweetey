@@ -94,7 +94,7 @@ class ProfileController extends Controller
         return response()->json([
             'with-replies' => view('__with-replies',[ 
                 // 'replies' => $replies,
-                'tweets' => $tweets, // order by date of reply!! kill me now agaiiiiiiiiiin
+                'tweets' => $tweets, // order by date of reply!! kill me now agaiiiiiiiiiin maybe push the updated at in it dunno
                 'user' => $user,
                 'yesterday' => carbonTime()
             ])->render()
