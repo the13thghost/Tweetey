@@ -60,6 +60,8 @@ $(document).ready(function () {
         });
 
         let submit_like = $(this).data('id');
+        console.log(this);
+
         let token = $('meta[name="csrf-token"]').attr('content');
         let el = this;
         let url = window.location.pathname;

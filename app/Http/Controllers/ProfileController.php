@@ -75,26 +75,26 @@ class ProfileController extends Controller
         ]);
     }
 
-    //dynamic profile nav link : Tweets & Replies > have to pass in scopeWithLikes()!
+    //dynamic profile nav link : Tweets & Replies 
     public function withRepliesRes(User $user) {
-        //get all tweets that user has replied on: get tweet_id's from replies table save as arr
-        // $replies = Reply::where('user_id', $user->id)->latest()->paginate(10);
+        $repliesArr = Reply::where('user_id', $user->id)->select('tweet_id', 'id', 'created_at')->get();
+        $tweetsOrder = collect(); // a collection
 
-        // a user can reply on a tweet multiple times => multiple same tweets
-        $repliesArr = $user->replies->pluck('tweet_id', 'id');
-        $tweets = [];
-        foreach($repliesArr as $key => $value) {
-            $tweet = Tweet::withLikes()->where('tweets.id', $value)->first();
-            $tweet['reply_id'] = $key;
-            array_push($tweets, $tweet);   
+        foreach($repliesArr as $item) {
+            $tweet = Tweet::withLikes()->where('tweets.id', $item['tweet_id'])->first();
+            $tweet['reply_id'] = $item['id'];
+            $tweet['reply_created_at'] = $item['created_at'];
+            $tweetsOrder->push($tweet);
         }
-
         
-        // $tweets = Tweet::withLikes()->whereIn('tweets.id', $repliesArr)->get();
+        // sort tweets by time of reply
+        $tweets = $tweetsOrder->sortByDesc(function($item) {
+            return $item->reply_created_at;
+        });
+
         return response()->json([
             'with-replies' => view('__with-replies',[ 
-                // 'replies' => $replies,
-                'tweets' => $tweets, // order by date of reply!! kill me now agaiiiiiiiiiin maybe push the updated at in it dunno
+                'tweets' => $tweets, 
                 'user' => $user,
                 'yesterday' => carbonTime()
             ])->render()
