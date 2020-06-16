@@ -55,17 +55,17 @@
     
     {{-- auth user info and reply --}}
     <div class="flex mt-2">
-        <a href="/profile/{{ $tweet->user->username }}" class="flex-shrink-0 w-9 ml-4 mr-2">
-            <x-avatar-icon>{{$tweet->user->avatar}}</x-avatar-icon>
+        <a href="/profile/{{ $user->username }}" class="flex-shrink-0 w-9 ml-4 mr-2">
+            <x-avatar-icon>{{$user->avatar}}</x-avatar-icon>
         </a>
         <div class="ml-1 mr-2 w-fultweet-h">
-            <span class="font-bold">{{$tweet->user->name}}</span>
-            <span class="text-gray-600">{{'@' . $tweet->user->username}}</span>
+            <span class="font-bold">{{$user->name}}</span>
+            <span class="text-gray-600">{{'@' . $user->username}}</span>
             <span class="text-gray-600">&middot;
-                @if($tweet->created_at < $yesterday) {{ $tweet->created_at->format('M d, Y') }}
-                    @elseif($tweet->created_at < $yesterday)
-                        {{ $tweet->created_at->format('M d, Y') }} @else
-                        {{ $tweet->created_at->diffForHumans() }} @endif </span> <div class="word-break">
+                @if($tweet->reply_created_at < $yesterday) {{ $tweet->reply_created_at->format('M d, Y') }}
+                    @elseif($tweet->reply_created_at < $yesterday)
+                        {{ $tweet->reply_created_at->format('M d, Y') }} @else
+                        {{ $tweet->reply_created_at->diffForHumans() }} @endif </span> <div class="word-break">
                         {{$tweet->replies->where('id', $tweet->reply_id)->first()->reply}}</div>
 
         </div>

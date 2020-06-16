@@ -1,5 +1,5 @@
 <div class="w-1/4 text-center items-center" style="height:20px">
-    <div data-id="{{ $tweet->id }}"
+    <div data-id-like="{{ $tweet->id }}"
         class="relative submit-like cursor-pointer mr-2 w-4 {{ $tweet->checkIfLiked('like', auth()->id()) ? 'text-blue-400' : 'text-gray-500' }}"
         type="submit">
         <svg viewBox="0 0 20 20">
@@ -10,12 +10,12 @@
             </g>
         </svg>
         <div class="absolute load-here-{{ $tweet->id }} text-sm text-gray-500 w-4" style="top:0;left:22px">
-            <div class="load-ajax-{{ $tweet->id }}">@if($tweet->likes != 0){{ $tweet->likes }}@endif</div>
+            <div class="load-ajax-{{ $tweet->id }}">@if(!empty($tweet->likes)){{ $tweet->likes }} @endif</div>
         </div>
     </div>
 </div>
 <div class="w-1/4 text-center items-center" style="height:20px">
-    <div data-id="{{ $tweet->id }}"
+    <div data-id-dislike="{{ $tweet->id }}"
         class="relative w-4 mr-2 cursor-pointer submit-dislike {{ $tweet->checkIfLiked('dislike', auth()->id()) ? 'text-blue-400' : 'text-gray-500' }}"
         type="submit">
         <svg viewBox="0 0 20 20">

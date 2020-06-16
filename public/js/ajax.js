@@ -59,9 +59,12 @@ $(document).ready(function () {
             }
         });
 
-        let submit_like = $(this).data('id');
+        let submit_like = $(this).data('id-like');
         let token = $('meta[name="csrf-token"]').attr('content');
-        let el = this;
+        let el = $(this);
+        let all = $(`[data-id-like=${submit_like}]`); //for replies mostly, we have multiple same tweets, update at the same time
+        
+        console.log(all);
         let url = window.location.pathname;
 
         $.ajax({
@@ -72,26 +75,21 @@ $(document).ready(function () {
                 '__token': token
             }
         }).done(function () {
-            changeCurrentLikeColor(el);
-            let dislike_section = $(el).parent().next().children(":first");
-            // $sacu = $(".load-here-" + submit_like);
-            
-            // Update like color
-            
-            // each loop is for replies nav link
-            // $loadHere = document.querySelectorAll(".load-here-" + submit_like); //nodelist
-            
-            // console.log($loadHere);
-            // $.each($loadHere, function($index, $value) { //docs
-            //     changeLikeColor(dislike_section, submit_like); //this
-            //     $($value).load(`${url}  .load-ajax-${submit_like}`);
-            //     console.log($($value));
-            // console.log($value);
-            $(".load-here-" + submit_like).load(`${url}  .load-ajax-${submit_like}`);
-            $(".load-here-dis-" + submit_like).load(`${url}  .load-ajax-dis-${submit_like}`);
+            // changeCurrentLikeColor(el);
+            console.log(url);
+            changeCurrentLikeColor(all);
+            $.each(all, function(i) {
+                let dislike_section = $(this).parent().next().children(":first"); 
+                changeLikeColor(dislike_section, submit_like)
             });
-            //this
             
+            // $(".load-here-" + submit_like).load(`${url}  .load-ajax-${submit_like}`);
+            // $(".load-here-dis-" + submit_like).load(`${url}  .load-ajax-dis-${submit_like}`);
+
+            $(".load-here-" + submit_like).load(`${url}  .load-ajax-${submit_like}`, function () {
+                $(".load-here-dis-" + submit_like).load(`${url}  .load-ajax-dis-${submit_like}`);
+            });
+              });            
         });
     });
 
@@ -106,9 +104,10 @@ $(document).ready(function () {
             }
         });
 
-        let submit_id = $(this).data('id');
+        let submit_id = $(this).data('id-dislike');
         let token = $('meta[name="csrf-token"]').attr('content');
         let el = this;
+        let all = $(`[data-id-dislike=${submit_id}]`);
         let url = window.location.pathname;
 
         $.ajax({
@@ -119,11 +118,13 @@ $(document).ready(function () {
                 '__token': token
             }
         }).done(function () {
-            changeCurrentLikeColor(el);
+            changeCurrentLikeColor(all);
             
             // Update like color
-            let like_section = $(el).parent().prev().children(":first"); 
-            changeLikeColor(like_section, submit_id);
+            $.each(all, function(i) {
+                let like_section = $(this).parent().prev().children(":first"); 
+                changeLikeColor(like_section, submit_id)
+            });
             $(".load-here-dis-" + submit_id).load(`${url}  .load-ajax-dis-${submit_id}`, function () {
                 $(".load-here-" + submit_id).load(`${url}  .load-ajax-${submit_id}`);
             });
