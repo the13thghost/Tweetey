@@ -60,8 +60,6 @@ $(document).ready(function () {
         });
 
         let submit_like = $(this).data('id');
-        console.log(this);
-
         let token = $('meta[name="csrf-token"]').attr('content');
         let el = this;
         let url = window.location.pathname;
@@ -76,14 +74,27 @@ $(document).ready(function () {
         }).done(function () {
             changeCurrentLikeColor(el);
             let dislike_section = $(el).parent().next().children(":first");
-
+            // $sacu = $(".load-here-" + submit_like);
+            
             // Update like color
-            changeLikeColor(dislike_section, submit_like);
+            
+            // each loop is for replies nav link
+            // $loadHere = document.querySelectorAll(".load-here-" + submit_like); //nodelist
+            
+            // console.log($loadHere);
+            // $.each($loadHere, function($index, $value) { //docs
+            //     changeLikeColor(dislike_section, submit_like); //this
+            //     $($value).load(`${url}  .load-ajax-${submit_like}`);
+            //     console.log($($value));
+            // console.log($value);
             $(".load-here-" + submit_like).load(`${url}  .load-ajax-${submit_like}`);
             $(".load-here-dis-" + submit_like).load(`${url}  .load-ajax-dis-${submit_like}`);
+            });
+            //this
+            
         });
     });
-});
+
 
 //THUMBS DOWN
 $(document).ready(function () {

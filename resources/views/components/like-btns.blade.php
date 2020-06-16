@@ -10,7 +10,7 @@
             </g>
         </svg>
         <div class="absolute load-here-{{ $tweet->id }} text-sm text-gray-500 w-4" style="top:0;left:22px">
-            <div class="load-ajax-{{ $tweet->id }}">@if(!empty($tweet->likes)){{ $tweet->likes }}@endif</div>
+            <div class="load-ajax-{{ $tweet->id }}">@if($tweet->likes != 0){{ $tweet->likes }}@endif</div>
         </div>
     </div>
 </div>
