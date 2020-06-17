@@ -112,6 +112,7 @@ class ProfileController extends Controller
         return view('profile.show',[ 
             'tweets' => $this->tweetsWithReplies($user->id),
             'user' => $user,
+            'dynamicReplies' => true,
             'totalTweets' => $totalTweets,
             'yesterday' => carbonTime()
         ]);
