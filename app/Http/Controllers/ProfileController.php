@@ -76,9 +76,10 @@ class ProfileController extends Controller
     }
 
     //dynamic profile nav link : Tweets & Replies 
-    public function withRepliesRes(User $user) {
-        $repliesArr = Reply::where('user_id', $user->id)->select('tweet_id', 'id', 'created_at')->get();
-        $tweetsOrder = collect(); // a collection
+
+    public function tweetsWithReplies($userParam) {
+        $repliesArr = Reply::where('user_id', $userParam)->select('tweet_id', 'id', 'created_at')->get();
+        $tweetsOrder = collect(); 
 
         foreach($repliesArr as $item) {
             $tweet = Tweet::withLikes()->where('tweets.id', $item['tweet_id'])->first();
@@ -92,9 +93,14 @@ class ProfileController extends Controller
             return $item->reply_created_at;
         });
 
+        return $tweets;
+    }
+
+    public function withRepliesRes(User $user) {
+        
         return response()->json([
             'with-replies' => view('__with-replies',[ 
-                'tweets' => $tweets, 
+                'tweets' => $this->tweetsWithReplies($user->id), 
                 'user' => $user,
                 'yesterday' => carbonTime()
             ])->render()
@@ -103,9 +109,8 @@ class ProfileController extends Controller
 
     public function withReplies(User $user) {
         $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
-        $tweets = Tweet::withLikes()->where('user_id', $user->id)->where('retweeted_from', null)->latest()->paginate(10);
         return view('profile.show',[ 
-            'tweets' => $tweets,
+            'tweets' => $this->tweetsWithReplies($user->id),
             'user' => $user,
             'totalTweets' => $totalTweets,
             'yesterday' => carbonTime()

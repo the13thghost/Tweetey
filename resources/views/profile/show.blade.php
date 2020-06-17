@@ -123,5 +123,4 @@
         </div>
     </section>
     <x-popups :user="$user"></x-popups>
-    {{ $tweets->links() }}
 </x-app>

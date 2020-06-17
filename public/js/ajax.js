@@ -63,9 +63,8 @@ $(document).ready(function () {
         let token = $('meta[name="csrf-token"]').attr('content');
         let el = $(this);
         let all = $(`[data-id-like=${submit_like}]`); //for replies mostly, we have multiple same tweets, update at the same time
-        
-        console.log(all);
         let url = window.location.pathname;
+        console.log(submit_like);
 
         $.ajax({
             url: `/tweets/${submit_like}/like`,
@@ -75,20 +74,15 @@ $(document).ready(function () {
                 '__token': token
             }
         }).done(function () {
-            // changeCurrentLikeColor(el);
-            console.log(url);
             changeCurrentLikeColor(all);
-            $.each(all, function(i) {
+            $.each(all, function() {
                 let dislike_section = $(this).parent().next().children(":first"); 
                 changeLikeColor(dislike_section, submit_like)
             });
             
-            // $(".load-here-" + submit_like).load(`${url}  .load-ajax-${submit_like}`);
-            // $(".load-here-dis-" + submit_like).load(`${url}  .load-ajax-dis-${submit_like}`);
-
-            $(".load-here-" + submit_like).load(`${url}  .load-ajax-${submit_like}`, function () {
-                $(".load-here-dis-" + submit_like).load(`${url}  .load-ajax-dis-${submit_like}`);
-            });
+            $(".load-here-" + submit_like).load(`${url}  .load-ajax-${submit_like}`);
+            $(".load-here-dis-" + submit_like).load(`${url}  .load-ajax-dis-${submit_like}`);
+            
               });            
         });
     });
@@ -119,15 +113,13 @@ $(document).ready(function () {
             }
         }).done(function () {
             changeCurrentLikeColor(all);
-            
             // Update like color
             $.each(all, function(i) {
                 let like_section = $(this).parent().prev().children(":first"); 
                 changeLikeColor(like_section, submit_id)
             });
-            $(".load-here-dis-" + submit_id).load(`${url}  .load-ajax-dis-${submit_id}`, function () {
+            $(".load-here-dis-" + submit_id).load(`${url}  .load-ajax-dis-${submit_id}`);
                 $(".load-here-" + submit_id).load(`${url}  .load-ajax-${submit_id}`);
-            });
         });
     });
 });
