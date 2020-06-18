@@ -28,14 +28,24 @@ class TweetController extends Controller
     }
 
         
-    //thread
-    public function show(Tweet $tweet) {
+    //thread - combination of replies and retweets with comments
+    public function show(Tweet $tweet, User $user) {
         if(is_null($tweet->retweeted_from)) {
-            $tweet = $tweet;
+            $tweet = Tweet::withLikes()->where('id', $tweet->id)->first();;
         } else {
-            $tweet = Tweet::where('id', $tweet->retweeted_from)->first();
+            $tweet = Tweet::withLikes()->where('id', $tweet->retweeted_from)->first();
         }
-        return view('tweets.show', compact('tweet'));
+        $replies = Reply::where('tweet_id', $tweet->id)->get();
+        $retweets = Tweet::withLikes()->where('retweeted_from', $tweet->id)->whereNotNull('comment')->get();
+
+        $repliesTweets = $replies->toBase()->merge($retweets)->sortByDesc('created_at'); //combine the 2 collections
+
+        return view('tweets.show', [
+            'tweet' => $tweet,
+            'repliesTweets' => $repliesTweets,
+            'user' => $user,
+            'yesterday' => carbonTime()
+        ]);
     }
 
     public function store() {

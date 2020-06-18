@@ -135,26 +135,34 @@ class ProfileController extends Controller
     }
 
     public function media(User $user) {
+        $imagesArr = $user->images->pluck('tweet_id')->unique();
         $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
-        $tweets = Tweet::withLikes()->where('user_id', $user->id)->latest()->paginate(10);
+        $tweets = Tweet::withLikes()->whereIn('tweets.id', $imagesArr)->latest()->paginate(10);
         return view('profile.show',[ 
             'tweets' => $tweets,
             'user' => $user,
             'totalTweets' => $totalTweets,
-            'yesterday' => carbonTime() 
+            'yesterday' => carbonTime(), 
+            'dynamicMedia' => true,
         ]);
     }
 
     //dynamic profile nav link : likes
 
-    public function likesRes(User $user) {
-        $likesArr = $user->likes->where('like', 1)->pluck('tweet_id'); // get tweets the user has liked, save by tweet_id
+    public function tweetsWithLikes($userParam) {
+        // get tweets the user has liked, save by tweet_id
         // left join with likes table, sum likes and dislike, order by updated at from likes table
-        $tweets = Tweet::withUpdatedAt()->whereIn('tweets.id', $likesArr)->orderBy('updated_at_likes', 'DESC')->get();
+        $likesArr = $userParam->likes->where('like', 1)->pluck('tweet_id'); 
+        $tweets = Tweet::withUpdatedAt()->whereIn('tweets.id', $likesArr)->orderBy('updated_at_likes', 'DESC')->paginate(10);
+        return $tweets;
+    }
+
+    public function likesRes(User $user) {
+        
         return response()->json([
             'likes' => view('__likes',[ 
                 'user' => $user,
-                'tweets' => $tweets,
+                'tweets' => $this->tweetsWithLikes($user),
                 'yesterday' => carbonTime()
             ])->render()
         ]);
@@ -162,12 +170,12 @@ class ProfileController extends Controller
 
     public function likes(User $user) {
         $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
-        $tweets = Tweet::withLikes()->where('user_id', $user->id)->latest()->paginate(10);
         return view('profile.show',[ 
-            'tweets' => $tweets,
+            'tweets' => $this->tweetsWithLikes($user),
             'user' => $user,
             'totalTweets' => $totalTweets,
-            'yesterday' => carbonTime()
+            'yesterday' => carbonTime(),
+            'dynamicLikes' => true
         ]);
     }
     

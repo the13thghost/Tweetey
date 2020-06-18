@@ -13,11 +13,11 @@ Route::middleware('auth')->group(function() {
     Route::get('/tweets', 'TweetController@index')->name('home');
     Route::post('/tweets', 'TweetController@store');
     Route::post('/retweets/{tweet}', 'TweetController@retweet');
-    Route::get('/tweet/{tweet}', 'TweetController@show');
+    Route::get('/tweet/{tweet}', 'TweetController@show'); //thread
     Route::post('/retweets/{tweet}/getTweet', 'TweetController@getTweet'); 
     Route::post('/retweets/{tweet}/comment', 'TweetController@retweetComment');
     Route::put('/profile/{user}/bio', 'ProfileController@updateBio');
-    Route::post('/replies/{tweet}', 'ReplyController@store');
+    Route::post('/replies/{tweet}', 'ReplyController@store'); 
     //dynamic nav
     Route::get('/profile/{user:username}/with-replies-res', 'ProfileController@withRepliesRes');
     Route::get('/profile/{user:username}/with-replies', 'ProfileController@withReplies');

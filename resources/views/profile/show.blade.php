@@ -109,12 +109,24 @@
     <section class="border border-gray-300 mb-6 load-tweets">
         <div class="load-tweets-ajax dynamic-load">
             @if(isset($dynamicReplies))
+
                 @include('__with-replies')
+
+
+            @elseif(isset($dynamicMedia))
+
+                @include('__media')
+
+            @elseif(isset($dynamicLikes))
+
+                @include('__likes')
+
             @else
+
             @forelse($tweets as $tweet)
 
-            @include('__tweet')
-
+                @include('__tweet')
+           
             @empty
             @can('noTweetsMsg', $user)
             <div class="text-lg text-center m-3 text-gray-500">You don't have any tweets yet</div>
@@ -123,22 +135,9 @@
             <div class="text-lg text-center m-3 text-gray-500">This user has not posted yet</div>
             @endcannot
             @endforelse
-
             @endif
-            {{-- @forelse($tweets as $tweet)
-
-            @include('__tweet')
-
-            @empty
-            @can('noTweetsMsg', $user)
-            <div class="text-lg text-center m-3 text-gray-500">You don't have any tweets yet</div>
-            @endcan
-            @cannot('NoTweetsMsg', $user)
-            <div class="text-lg text-center m-3 text-gray-500">This user has not posted yet</div>
-            @endcannot
-            @endforelse --}}
-    {{-- {{ $tweets->links() }} --}}
-
+            
+   
         </div>
     </section>
     <x-popups :user="$user"></x-popups>

@@ -1,6 +1,7 @@
 @forelse($tweets as $tweet)
 
     @include('__replies') 
+    
 
 @empty
 @can('noTweetsMsg', $user)
@@ -10,3 +11,4 @@
 <div class="text-lg text-center m-3 text-gray-500">No replies yet</div>
 @endcannot
 @endforelse 
+

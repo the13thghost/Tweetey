@@ -133,6 +133,10 @@ $(document).ready(function () {
                 for (i = 0; i < el; i++) {
                     $(`.load-ajax-dis-${submit_id}:nth-child(${i})`).remove();
                 }
+
+                if(url.includes('/likes')) {
+                    $(".load-tweets").load(`${url} .load-tweets-ajax`);
+                }
             });
 
             $(".load-here-" + submit_id).load(`${url}  .load-ajax-${submit_id}`, function() {
@@ -141,6 +145,8 @@ $(document).ready(function () {
                     $(`.load-ajax-${submit_id}:nth-child(${i})`).remove();
                 }
             });
+
+            
         });
     });
 });

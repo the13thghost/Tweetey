@@ -141,6 +141,23 @@ $(document).ready(function() {
         $('.gallery').children().remove();
     });
 
+    // navigation to threads
+    $(document).on('click', '.thread', function() {
+        let me = $(this).find('.open-comment').data('id');
+        window.location.href = `/tweet/${me}`;
+        
+    })
+
+    // enlarge thread social icons
+    // if(window.location.href.includes('/tweet/')) {
+    //     $('.submit-like').first().removeClass('w-4').addClass('w-6');
+    //     $('.submit-dislike').first().removeClass('w-4').addClass('w-6');
+    //     $('.open-comment').first().children().first().addClass('w-6');
+    //     $('.retweet-click').first().removeClass('w-5').addClass('w-8');
+    // }
+    
+
+
 });
 
 // Counter for publishing tweets/comments/replies

@@ -45,7 +45,7 @@
             @endif
             
             
-            <div class="flex items-center mt-3">
+            <div class="flex items-center mt-3"> 
                 <x-tweet-social-options :tweet="$tweet"></x-tweet-social-options>
             </div>
         </div>

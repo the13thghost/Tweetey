@@ -1,6 +1,6 @@
 <x-like-btns :tweet="$tweet"></x-like-btns>
 
-{{-- Comment btn --}}
+{{-- Comment btn --}} 
 <div class="w-1/4 text-center ">
     <a href="/tweet/{{$tweet->id}}" data-id="{{ $tweet->id }}" class="cursor-pointer comment open-comment">
         <svg viewBox="0 0 20 20" class="w-5 text-gray-500 cursor-pointer">
