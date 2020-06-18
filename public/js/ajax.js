@@ -79,12 +79,18 @@ $(document).ready(function () {
                 changeLikeColor(dislike_section, submit_like)
             });
 
+            
+
                 $(".load-here-" + submit_like).load(`${url}  .load-ajax-${submit_like}`, function() {
                     let el = $(this).children().length;
                     for (i = 0; i < el; i++) {
                         $(`.load-ajax-${submit_like}:nth-child(${i})`).remove();
                     }
                 });
+
+                if(url.includes('/tweet/')) {
+                    $(".th-in").load(`${url}  .th-in-load`);
+                }
 
                 $(".load-here-dis-" + submit_like).load(`${url}  .load-ajax-dis-${submit_like}`, function() {
                     let el = $(this).children().length;
@@ -265,7 +271,16 @@ $(document).ready(function () {
         }).done(function () {
             let me = $(el).closest('.modal2'); 
             $(me[0]).remove();
+
+            //thread page, refresh likes, dislikes ...
+            if(url.includes('/tweet/')) {
+                $(".fi-so").load(`${url}  .fi-so-load`);
+                $(".th-in").load(`${url}  .th-in-load`);
+            }
+
             $(".load-tweets").load(`${url}  .load-tweets-ajax`);
+
+            
         });
     });
 });
@@ -338,16 +353,25 @@ $(document).on('submit', '.retweet-comment-form', function (event) {
         $(".popup-overlay, .popup-content").removeClass("active");
         $('.retweet-comment-form').removeAttr('action');
         $(".publish-errors-comment").html('');
+
+        //thread page, refresh likes, dislikes ...
+        if(url.includes('/tweet/')) {
+            $(".fi-so").load(`${url}  .fi-so-load`);
+            $(".th-in").load(`${url}  .th-in-load`);
+        }
+
         $(".load-tweets").load(`${url}  .load-tweets-ajax`);
         $("body").css("overflow", "visible");
+
     }).fail(function(xhr) {
-        console.log(xhr.responseJSON.errors);
         $.each(xhr.responseJSON.errors, function(index, val) {
             $('[name=' + index + ']');
             $.each(val, function(i, error) {
                 $('.publish-errors-comment').html(error);
             });
         });
+
+        
     });
 });
 
@@ -484,6 +508,12 @@ $(document).on('submit', '.comment-form', function (event) {
             }).done(function () {
                 let me = $(el).closest('.modal2'); // i need me[0] so i get dom el
                 $(me[0]).remove();
+
+                if(url.includes('/tweet/')) {
+                    $(".fi-so").load(`${url}  .fi-so-load`);
+                    $(".th-in").load(`${url}  .th-in-load`);
+                }
+                
                 $(".load-tweets").load(`${url}  .load-tweets-ajax`);
             });
         });

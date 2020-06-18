@@ -13,7 +13,8 @@
     </a>
 </div>
 {{-- Retweet btn --}}
-<div class="w-1/4 text-center relative ">
+<div class="w-1/4 text-center relative retweet-sec">
+    <div class="retweet-sec-load">
     <svg viewBox="0 0 20 20" class="w-5  
     @if(current_user()->retweeted($tweet) OR $tweet->retweetsFromAuthUser() OR current_user()->retweetedOri($tweet))
     text-green-600
@@ -46,7 +47,8 @@
             </li>
         </ul>
     </div>
-    <div class="items-center absolute text-sm text-gray-500" style="top:0;left:26px">
+    <div class="items-center absolute text-sm text-gray-500 retweets-count" style="top:0;left:26px">
         {{ $tweet->retweetsNumber() ? $tweet->retweetsNumber() : '' }}
     </div>
+</div>
 </div>

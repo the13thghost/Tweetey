@@ -40,14 +40,18 @@
             <div>{{$tweet->created_at->diffForHumans()}}</div>
         </div>
         <hr>
-        <div class="flex py-3">
-            <div class="mr-3"><span class="font-bold">{{$tweet->retweetsNumber()}}</span> Retweets</div>
-            <div><span class="font-bold">{{ $tweet->likes()->count() }}</span> Likes</div>
+        <div class="flex py-3 th-in">
+            <div class="th-in-load">
+            <div class="mr-3 inline"><span class="font-bold">{{$tweet->retweetsNumber()}}</span> Retweets</div>
+            <div class="inline"><span class="font-bold">{{ $tweet->likes()->count() }}</span> Likes</div>
+        </div>
         </div>
         <hr>
-        <div class="flex items-center my-5">
+        <div class="fi-so">
+        <div class="flex items-center my-5 fi-so-load">
             <x-tweet-social-options :tweet="$tweet"></x-tweet-social-options>
         </div>
+    </div>
          
         
         
@@ -86,7 +90,7 @@
         </div>
 
             </div>
-            <x-tweet-options :tweet="$tweet"></x-tweet-options>
+            <x-tweet-options :tweet="$replyTweet" :user="$user"></x-tweet-options>
 
         </div>
         

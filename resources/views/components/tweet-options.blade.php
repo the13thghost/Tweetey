@@ -1,4 +1,4 @@
-<div class="w-7 mr-2 text-gray-500 relative">
+<div class="w-7 mr-2 text-gray-500 relative"> 
     @can('editTweet', $tweet)
     <svg viewBox="0 0 20 20" class="w-5 dots hover:text-gray-800 cursor-pointer">
         <g class="fill-current">
@@ -9,7 +9,7 @@
     </svg>
     @endcan
     @cannot('editTweet', $tweet)
-    <div class="w-5"></div>
+<div class="w-5"></div>
     @endcannot
     <div class="hidden absolute z-10 h-8 w-8 bg-white shadow modal1" style="top:0;right:20px; width:145px; height:82px">
         <ul class="text-xs text-gray-800 p-2">
