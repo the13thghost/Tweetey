@@ -27,8 +27,16 @@ class Tweet extends Model
         return $this->hasMany(Retweet::class);
     }
 
+    public function replies() {
+        return $this->hasMany(Reply::class);
+    }    
+
     public function retweetsNumber() {
         return $this->retweets->count(); 
+    }
+
+    public function repliesNumber() {
+        return $this->replies->count();
     }
 
     public function retweetOrigi() {
@@ -39,9 +47,7 @@ class Tweet extends Model
         return $this->user->is(auth()->user()) && !is_null($this->retweeted_from) && is_null($this->comment);
     }   
 
-    public function replies() {
-        return $this->hasMany(Reply::class);
-    }
+    
 
 }
 

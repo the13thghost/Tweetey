@@ -43,7 +43,7 @@
         <div class="flex py-3 th-in">
             <div class="th-in-load">
             <div class="mr-3 inline"><span class="font-bold">{{$tweet->retweetsNumber()}}</span> Retweets</div>
-            <div class="inline"><span class="font-bold">{{ $tweet->likes()->count() }}</span> Likes</div>
+            <div class="inline"><span class="font-bold">@if(!empty($tweet->likes)){{ $tweet->likes }} @else 0 @endif</span> Likes</div>
         </div>
         </div>
         <hr>

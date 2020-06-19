@@ -133,6 +133,10 @@ $(document).ready(function () {
                 let like_section = $(this).parent().prev().children(":first"); 
                 changeLikeColor(like_section, submit_id)
             });
+            
+            if(url.includes('/tweet/')) {
+                $(".th-in").load(`${url}  .th-in-load`);
+            }
 
             $(".load-here-dis-" + submit_id).load(`${url}  .load-ajax-dis-${submit_id}`, function() {
                 let el = $(this).children().length;
@@ -144,6 +148,8 @@ $(document).ready(function () {
                     $(".load-tweets").load(`${url} .load-tweets-ajax`);
                 }
             });
+
+            
 
             $(".load-here-" + submit_id).load(`${url}  .load-ajax-${submit_id}`, function() {
                 let el = $(this).children().length;
