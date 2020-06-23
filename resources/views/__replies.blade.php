@@ -1,11 +1,11 @@
-    <div class="border-gray-300 {{ $loop->last ? '' : 'border-b' }} py-3 hover:bg-gray-blue py-3">
+    <div class="border-gray-300 {{ $loop->last ? '' : 'border-b' }} py-3 hover:bg-gray-blue py-3 thread">
         <div class="flex mb-3"> 
             <a href="/profile/{{ $tweet->user->username }}" class="flex-shrink-0 w-9 ml-4 mr-2">
                 <x-avatar-icon>{{$tweet->user->avatar}}</x-avatar-icon>
                 <div class="bg-gray-400 mt-1 mx-auto h-full" style="width:2px;"></div> <!-- gray line-->
             </a>
             <div class="ml-1 mr-2 w-full calc-h">
-                <span class="font-bold">{{$tweet->user->name}}</span>
+                <span class="font-bold"><a href="/profile/{{ $tweet->user->username }}">{{$tweet->user->name}}</a></span>
                 <span class="text-gray-600">{{'@' . $tweet->user->username}}</span>
                 <span class="text-gray-600">&middot;
                     @if($tweet->created_at < $yesterday) {{ $tweet->created_at->format('M d, Y') }}
@@ -59,7 +59,7 @@
             <x-avatar-icon>{{$user->avatar}}</x-avatar-icon>
         </a>
         <div class="ml-1 mr-2 w-fultweet-h">
-            <span class="font-bold">{{$user->name}}</span>
+            <span class="font-bold"><a href="/profile/{{$user->username}}">{{$user->name}}</a></span>
             <span class="text-gray-600">{{'@' . $user->username}}</span>
             <span class="text-gray-600">&middot;
                 @if($tweet->reply_created_at < $yesterday) {{ $tweet->reply_created_at->format('M d, Y') }}

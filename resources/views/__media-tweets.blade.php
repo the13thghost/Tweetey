@@ -1,4 +1,4 @@
-<div class="{{ $loop->last ? '' : 'border-b-1' }} border-gray-300 py-3 hover:bg-gray-blue">
+<div class="{{ $loop->last ? '' : 'border-b-1' }} border-gray-300 py-3 hover:bg-gray-blue thread">
     <div class="flex">
         <a href="/profile/{{ $tweet->user->username }}" class="flex-shrink-0 ml-4 w-9 mr-2">
             <x-avatar-icon :tweet='$tweet' class="ml-2">
@@ -7,7 +7,9 @@
         </a>
         <div class="ml-1 mr-2 w-full calc-h">
             <span class="font-bold">
+                <a href="/profile/{{ $tweet->user->username }}">
                 {{ $tweet->user->name }}
+                </a>
             </span>
             <span class="text-gray-600">
                 {{ '@' . $tweet->user->username }}

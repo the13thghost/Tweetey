@@ -1,7 +1,7 @@
 <x-app>
     @include('__publish-panel') 
 
-    <section class="border border-gray-300 mb-6 tweets-1 load-tweets">
+    <section class="border border-gray-300 mb-6 tweets-1 load-tweets thread">
         <div class="tweets-fresh load-tweets-ajax">
             @forelse($tweets as $tweet)
             <div class="{{ $loop->last ? '' : 'border-b-1' }} border-gray-300 py-3 hover:bg-gray-blue">
@@ -27,7 +27,7 @@
                 </div>
                 @endif
                 <div class="flex">
-                    <a href="/profile/{{ $tweet->user->username }}" class="flex-shrink-0 ml-4 w-9 mr-2">
+                <a href="/profile/@if(!is_null($tweet->retweeted_from) && is_null($tweet->comment)){{$tweet->retweetOrigi()->user->username}}@else{{ $tweet->user->username }}@endif" class="flex-shrink-0 ml-4 w-9 mr-2">
                         <x-avatar-icon :tweet='$tweet' class="ml-2">
                             @if(!is_null($tweet->retweeted_from) && is_null($tweet->comment))
                             {{$tweet->retweetOrigi()->user->avatar}}
@@ -39,9 +39,9 @@
                     <div class="ml-1 mr-2 w-full">
                         <span class="font-bold">
                             @if(!is_null($tweet->retweeted_from) && is_null($tweet->comment))
-                            {{$tweet->retweetOrigi()->user->name}}
+                            <a href="/profile/{{$tweet->retweetOrigi()->user->username}}">{{$tweet->retweetOrigi()->user->name}}</a>
                             @else
-                            {{ $tweet->user->name }}
+                            <a href="/profile/{{$tweet->user->username}}">{{ $tweet->user->name }}</a>
                             @endif
                         </span>
                         <span class="text-gray-600">

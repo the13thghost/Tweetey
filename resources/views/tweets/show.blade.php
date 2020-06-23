@@ -19,7 +19,6 @@
             </div>
         </div>
     </x-top-bar>
-    {{-- {{$tweet}} --}}
     <div class="px-4 pt-4 border-l border-r border-b border-gray-300">
         <div class="flex items-center mb-3">
             <a href="/profile/{{ $tweet->user->username }}" class="flex-shrink-0 w-9 mr-2">
@@ -28,13 +27,18 @@
                 </x-avatar-icon>
             </a>
             <span class="">
-                <div class="font-bold">{{ $tweet->user->name }}</div>
+                <div class="font-bold"><a href="/profile/{{ $tweet->user->username }}">{{ $tweet->user->name }}</a></div>
                 <div>{{ '@' . $tweet->user->username }}</div>
             </span>
         </div>
         <div class="text-xl mb-3" style="max-width:620px">
             {{$tweet->body}}
         </div>
+        @if($tweet->images->isNotEmpty())
+        <div class="mb-2">
+            <x-images-layout :tweet="$tweet"></x-images-layout>
+        </div>
+        @endif
         <div class="flex text-gray-600 mb-2">
             <div class="mr-1">{{$tweet->created_at->format('h:i A')}} &middot;</div>
             <div>{{$tweet->created_at->diffForHumans()}}</div>
@@ -66,7 +70,7 @@
         <x-avatar-icon>{{$replyTweet->user->avatar}}</x-avatar-icon>
     </a>
     <div class="ml-1 mr-2 w-full tweet-h">
-        <span class="font-bold">{{$replyTweet->user->name}}</span>
+        <span class="font-bold"><a href="/profile/{{$replyTweet->user->username}}">{{$replyTweet->user->name}}</a></span>
         <span class="text-gray-600">{{'@' . $replyTweet->user->username}}</span>
         <span class="text-gray-600">&middot;
             @if($replyTweet->created_at < $yesterday)
@@ -77,7 +81,7 @@
             {{ $replyTweet->created_at->diffForHumans() }} 
             @endif </span> <div class="word-break">
             @if(isset($replyTweet->reply))  
-            <div class="text-gray-600"> Replying to <span class="text-blue-900">{{ '@' . $tweet->user->username}}</span></div>
+            <div class="text-gray-600"> Replying to <span class="text-blue-900"><a href="/profile/{{$tweet->user->username}}">{{ '@' . $tweet->user->username}}</a></span></div>
             <div class="my-1">{{$replyTweet->reply}}</div>
             @else
             <div class="my-1">{{$replyTweet->comment}}</div>
@@ -97,7 +101,7 @@
         <x-popups :user="$user"></x-popups>
 
         @empty
-            <div>nothing here yet</div>
+            <div class="text-lg text-gray-600 text-center py-3 border-l border-r border-b border-gray-300">Nothing here yet</div>
         @endforelse
     </div>
 </section>

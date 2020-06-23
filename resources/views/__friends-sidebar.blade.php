@@ -3,7 +3,7 @@
     <ul class="following"> 
         <div class="following-users">
             @if(current_user()->follows->isEmpty())
-            <div class="italic">
+            <div class="italic text-lg">
                 You are not following anyone.<br>
                 Try <a href="/explore" class="text-blue-500 font-semibold hover:underline">Explore</a>
             </div>
