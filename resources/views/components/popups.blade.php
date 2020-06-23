@@ -1,8 +1,8 @@
     {{-- popup --}}
-    <div class="popup-overlay border-t border-gray-300" style="height:auto">
+    <div class="popup-overlay border-t border-gray-300 z-50" style="height:auto">
         <div style="height:53px" class="border-l border-r border-b border-gray-300 sticky top-0 z-10 bg-white">
-            <div class="close text-left py-4 ml-3">
-                <svg viewBox="0 0 20 20" class="w-5 text-blue-900">
+            <div class="text-left py-4 ml-3">
+                <svg viewBox="0 0 20 20" class="w-5 text-blue-900 close cursor-pointer">
                     <g class="fill-current">
                         <polygon
                             points="10 8.58578644 2.92893219 1.51471863 1.51471863 2.92893219 8.58578644 10 1.51471863 17.0710678 2.92893219 18.4852814 10 11.4142136 17.0710678 18.4852814 18.4852814 17.0710678 11.4142136 10 18.4852814 2.92893219 17.0710678 1.51471863 10 8.58578644">
@@ -44,10 +44,10 @@
     </div>
 
     {{-- Popup for bio --}}
-    <div class="bio-overlay  border-t border-gray-300" style="height:auto">
+    <div class="bio-overlay  border-t border-gray-300 z-50" style="height:auto">
         <div style="height:53px" class="border-l border-r border-b border-gray-300 sticky top-0 z-10 bg-white">
-            <div class="close text-left py-4 ml-3">
-                <svg viewBox="0 0 20 20" class="w-5 text-blue-900">
+            <div class="text-left py-4 ml-3">
+                <svg viewBox="0 0 20 20" class="w-5 text-blue-900 close cursor-pointer">
                     <g class="fill-current">
                         <polygon
                             points="10 8.58578644 2.92893219 1.51471863 1.51471863 2.92893219 8.58578644 10 1.51471863 17.0710678 2.92893219 18.4852814 10 11.4142136 17.0710678 18.4852814 18.4852814 17.0710678 11.4142136 10 18.4852814 2.92893219 17.0710678 1.51471863 10 8.58578644">
@@ -90,10 +90,10 @@
     </div>
 
     {{-- Popup to reply --}}
-    <div class="comment-overlay border-t border-gray-300" style="height:auto">
+    <div class="comment-overlay border-t border-gray-300 z-50" style="height:auto">
         <div style="height:53px" class="border-l border-r border-b border-gray-300 sticky top-0 z-10 bg-white">
-            <div class="close text-left py-4 ml-3">
-                <svg viewBox="0 0 20 20" class="w-5 text-blue-900">
+            <div class="text-left py-4 ml-3">
+                <svg viewBox="0 0 20 20" class="w-5 text-blue-900 close cursor-pointer">
                     <g class="fill-current">
                         <polygon
                             points="10 8.58578644 2.92893219 1.51471863 1.51471863 2.92893219 8.58578644 10 1.51471863 17.0710678 2.92893219 18.4852814 10 11.4142136 17.0710678 18.4852814 18.4852814 17.0710678 11.4142136 10 18.4852814 2.92893219 17.0710678 1.51471863 10 8.58578644">
@@ -154,3 +154,4 @@
             </div>
         </div>
     </div>
+    <div class="w-full h-full overlay-shade z-20"></div>

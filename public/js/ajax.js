@@ -9,7 +9,7 @@ $('#toggleFollow').on('submit', function (event) {
         url: post_url,
         type: request_method,
         data: form_data
-    }).done(function () { 
+    }).done(function () {
         let url = window.location.pathname;
 
         $('.follow-text').fadeOut(0, function () {
@@ -61,9 +61,8 @@ $(document).ready(function () {
 
         let submit_like = $(this).data('id-like');
         let token = $('meta[name="csrf-token"]').attr('content');
-        let all = $(`[data-id-like=${submit_like}]`); //for replies mostly, we have multiple same tweets, update at the same time
+        let all = $(`[data-id-like=${submit_like}]`); // For replies mostly > multiple same tweets > update all at the same time
         let url = window.location.pathname;
-        console.log(submit_like);
 
         $.ajax({
             url: `/tweets/${submit_like}/like`,
@@ -74,33 +73,31 @@ $(document).ready(function () {
             }
         }).done(function () {
             changeCurrentLikeColor(all);
-            $.each(all, function() {
-                let dislike_section = $(this).parent().next().children(":first"); 
+            $.each(all, function () {
+                let dislike_section = $(this).parent().next().children(":first");
                 changeLikeColor(dislike_section, submit_like)
             });
 
-            
-
-                $(".load-here-" + submit_like).load(`${url}  .load-ajax-${submit_like}`, function() {
-                    let el = $(this).children().length;
-                    for (i = 0; i < el; i++) {
-                        $(`.load-ajax-${submit_like}:nth-child(${i})`).remove();
-                    }
-                });
-
-                if(url.includes('/tweet/')) {
-                    $(".th-in").load(`${url}  .th-in-load`);
+            $(".load-here-" + submit_like).load(`${url}  .load-ajax-${submit_like}`, function () {
+                let el = $(this).children().length;
+                for (i = 0; i < el; i++) {
+                    $(`.load-ajax-${submit_like}:nth-child(${i})`).remove();
                 }
+            });
 
-                $(".load-here-dis-" + submit_like).load(`${url}  .load-ajax-dis-${submit_like}`, function() {
-                    let el = $(this).children().length;
-                    for (i = 0; i < el; i++) {
-                        $(`.load-ajax-dis-${submit_like}:nth-child(${i})`).remove();
-                    }
-                });           
-              });            
+            if (url.includes('/tweet/')) {
+                $(".th-in").load(`${url}  .th-in-load`);
+            }
+
+            $(".load-here-dis-" + submit_like).load(`${url}  .load-ajax-dis-${submit_like}`, function () {
+                let el = $(this).children().length;
+                for (i = 0; i < el; i++) {
+                    $(`.load-ajax-dis-${submit_like}:nth-child(${i})`).remove();
+                }
+            });
         });
     });
+});
 
 
 //THUMBS DOWN
@@ -129,36 +126,32 @@ $(document).ready(function () {
         }).done(function () {
             changeCurrentLikeColor(all);
             // Update like color
-            $.each(all, function(i) {
-                let like_section = $(this).parent().prev().children(":first"); 
+            $.each(all, function () {
+                let like_section = $(this).parent().prev().children(":first");
                 changeLikeColor(like_section, submit_id)
             });
-            
-            if(url.includes('/tweet/')) {
+
+            if (url.includes('/tweet/')) {
                 $(".th-in").load(`${url}  .th-in-load`);
             }
 
-            $(".load-here-dis-" + submit_id).load(`${url}  .load-ajax-dis-${submit_id}`, function() {
+            $(".load-here-dis-" + submit_id).load(`${url}  .load-ajax-dis-${submit_id}`, function () {
                 let el = $(this).children().length;
                 for (i = 0; i < el; i++) {
                     $(`.load-ajax-dis-${submit_id}:nth-child(${i})`).remove();
                 }
 
-                if(url.includes('/likes')) {
+                if (url.includes('/likes')) {
                     $(".load-tweets").load(`${url} .load-tweets-ajax`);
                 }
             });
 
-            
-
-            $(".load-here-" + submit_id).load(`${url}  .load-ajax-${submit_id}`, function() {
+            $(".load-here-" + submit_id).load(`${url}  .load-ajax-${submit_id}`, function () {
                 let el = $(this).children().length;
                 for (i = 0; i < el; i++) {
                     $(`.load-ajax-${submit_id}:nth-child(${i})`).remove();
                 }
             });
-
-            
         });
     });
 });
@@ -166,10 +159,6 @@ $(document).ready(function () {
 //DELETE TWEET
 $(document).ready(function () {
     $(document).on('click', 'li.delete-post', function () {
-
-        // if(!confirm("Are you sure you want to delete this tweet")) {
-        //     return false;
-        //   } 
 
         $.ajaxSetup({
             headers: {
@@ -181,8 +170,8 @@ $(document).ready(function () {
         let token = $('meta[name="csrf-token"]').attr('content');
         let el = this;
         let url = window.location.pathname;
-        let me = $(el).closest('.whole');
-        let ze = $(me).next();
+        let whole = $(el).closest('.whole');
+        let wholeNext = $(whole).next();
 
         $.ajax({
             url: `/tweets/${delete_id}/delete`,
@@ -192,8 +181,8 @@ $(document).ready(function () {
                 '__token': token
             },
         }).done(function () {
-            $(me).remove();
-            $(ze).remove();
+            $(whole).remove();
+            $(wholeNext).remove();
             $(".load-tweets").load(`${url}  .load-tweets-ajax`);
         });
     });
@@ -205,7 +194,7 @@ $('#publish').on('submit', function (event) {
     let form = $(this)[0];
     let form_data = new FormData(form);
     let post_url = $(this).attr("action");
-    let request_method = $(this).attr("method"); 
+    let request_method = $(this).attr("method");
     let url = window.location.pathname;
 
     $.ajaxSetup({
@@ -222,9 +211,9 @@ $('#publish').on('submit', function (event) {
         processData: false,
         contentType: false,
         cache: false
-    }).done(function (response) { 
+    }).done(function () {
 
-        $(".textarea-1").load(`${url}  .textarea-fresh`, function() {
+        $(".textarea-1").load(`${url}  .textarea-fresh`, function () {
             $('.publish-errors').html('');
             $('.gallery').children().remove();
             $(".counter-1").load(`${url}  .counter-fresh`);
@@ -236,16 +225,16 @@ $('#publish').on('submit', function (event) {
             $(this).delay(6000).fadeOut(1000);
         });
 
-    }).fail(function(xhr) {
-        $.each(xhr.responseJSON.errors, function(index, val) {
+    }).fail(function (xhr) {
+        $.each(xhr.responseJSON.errors, function (index, val) {
             // console.log(xhr.responseJSON.errors);
             $('[name=' + index + ']');
 
-            if(xhr.responseJSON.errors['image']) { // max 4 files accepted! string
+            if (xhr.responseJSON.errors['image']) { // string: Max 4 files accepted!
                 $('.gallery').children().remove();
             }
-            // with this you can show all errors
-            $.each(val, function(i, error) {
+
+            $.each(val, function (i, error) {
                 $('.publish-errors').html(error);
             });
         });
@@ -275,24 +264,21 @@ $(document).ready(function () {
                 '__token': token
             }
         }).done(function () {
-            let me = $(el).closest('.modal2'); 
+            let me = $(el).closest('.modal2');
             $(me[0]).remove();
 
             //thread page, refresh likes, dislikes ...
-            if(url.includes('/tweet/')) {
+            if (url.includes('/tweet/')) {
                 $(".fi-so").load(`${url}  .fi-so-load`);
                 $(".th-in").load(`${url}  .th-in-load`);
             }
 
             $(".load-tweets").load(`${url}  .load-tweets-ajax`);
-
-            
         });
     });
 });
 
-//RETWEET WITH COMMENT - send to server the id of the tweet > return the tweet > show body of tweet in popup
-
+//RETWEET WITH COMMENT - Send the id of the tweet > return the tweet > show body of tweet in popup
 $(document).on('click', '.retweet-comment', function (event) {
     event.preventDefault();
     let token = $('meta[name="csrf-token"]').attr('content');
@@ -312,7 +298,6 @@ $(document).on('click', '.retweet-comment', function (event) {
             '__token': token
         }
     }).done(function (response) {
-        console.log(response['images']);
         let array = response['body'];
         let splittedArr = array.split("");
         splittedArr.splice(100);
@@ -320,7 +305,7 @@ $(document).on('click', '.retweet-comment', function (event) {
         splittedArr.join("");
 
         function imgEmpty(param) {
-            if(response['images'] != 0) {
+            if (response['images'] != 0) {
                 $(`<div class="images-comment"></div>`).insertAfter(param);
                 $('.images-comment').html(response['images']);
             }
@@ -330,10 +315,14 @@ $(document).on('click', '.retweet-comment', function (event) {
         $('textarea.mention').after($div);
         imgEmpty('.res-ori-body-comment');
         $('.retweet-comment-form').attr('action', `/retweets/${response['id']}/comment`);
+        $(".popup-overlay, .popup-content, .overlay-shade").addClass("active");
+        $("body").css({
+            "overflow": "hidden"
+        });
     });
 });
 
-// RETWEET WITH COMMENT - save record in DB
+// RETWEET WITH COMMENT - Save record in DB
 $(document).on('submit', '.retweet-comment-form', function (event) {
     // Action attr was added via jquery in main.js
     event.preventDefault();
@@ -354,38 +343,38 @@ $(document).on('submit', '.retweet-comment-form', function (event) {
         type: request_method,
         data: form_data
     }).done(function () {
-        let me = $(el).closest('.modal2'); 
+        let me = $(el).closest('.modal2');
         $(me[0]).remove();
         $(".popup-overlay, .popup-content").removeClass("active");
         $('.retweet-comment-form').removeAttr('action');
         $(".publish-errors-comment").html('');
 
         //thread page, refresh likes, dislikes ...
-        if(url.includes('/tweet/')) {
+        if (url.includes('/tweet/')) {
             $(".fi-so").load(`${url}  .fi-so-load`);
             $(".th-in").load(`${url}  .th-in-load`);
         }
 
         $(".load-tweets").load(`${url}  .load-tweets-ajax`);
         $("body").css("overflow", "visible");
+        $(".overlay-shade").removeClass("active");
 
-    }).fail(function(xhr) {
-        $.each(xhr.responseJSON.errors, function(index, val) {
+    }).fail(function (xhr) {
+        $.each(xhr.responseJSON.errors, function (index, val) {
             $('[name=' + index + ']');
-            $.each(val, function(i, error) {
+            $.each(val, function (i, error) {
                 $('.publish-errors-comment').html(error);
             });
         });
-
-        
     });
 });
 
-// SHOW "REPLYING TO" POPUP - add original tweet to popup
+// SHOW "REPLYING TO" POPUP - Add original tweet to popup
 $(document).on('click', '.comment', function (event) {
     event.preventDefault();
     let token = $('meta[name="csrf-token"]').attr('content');
     let id = $(this).data('id');
+    let closestHeight = $(this).closest('.calc-h').innerHeight() - 49;
 
     $.ajaxSetup({
         headers: {
@@ -408,40 +397,41 @@ $(document).on('click', '.comment', function (event) {
             $('.response-username').text(`@${response[username]}`);
             $('.datetime').text(`${response[datetime]}`);
             $('.response-body').text(`${response[body]}`);
-            $('.enter-h').removeAttr('style');
-        }
-
-        function calcHeight() {
-            // Set height of gray line
-            let beforeHeight = $('.calc-h').innerHeight();
-            let height = beforeHeight - 50;
-            $('.enter-h').attr('style', `height:${height}px;width:2px`);
-            $('.comment-form').attr('action', `/replies/${response['id']}`);
         }
 
         function imgEmpty(param) {
-            if(response['images'] != 0) {
+            let height;
+            if (response['images'] != 0) {
                 $(`<div class="images-reply"></div>`).insertAfter(param);
                 $('.images-reply').html(response['images']);
+                height = $('.calc-h-media').innerHeight() + 36; // Height of grey line
+
+            } else {
+                height = closestHeight;
             }
+
+            $('.enter-h').attr('style', `height:${height}px;width:2px`);
+            $('.comment-form').attr('action', `/replies/${response['id']}`);
+            $(".comment-overlay, .comment-content, .overlay-shade").addClass("active");
+            $("body").css({
+                "overflow": "hidden"
+            });
+
         }
 
         // Check if it's a retweet or an original
         if (response['comment']) {
-            popupContent('reposter_avatar', 'reposter_name', 'reposter_username', 'reposted_datetime', 'comment');        
+            popupContent('reposter_avatar', 'reposter_name', 'reposter_username', 'reposted_datetime', 'comment');
             $(`<div class="original-tweet border border-gray-400 rounded-xlt p-3 mt-2 mr-3"><div class="flex items-center"><img class="rounded-full object-cover mr-2" style="width:20px;height:20px" src="${response['avatar']}"><div class="mr-2 font-bold">${response['name']}</div><div class="text-gray-600 mr-1">${response['username']}</div><div class="text-gray-600">&middot; ${response['datetime']}</div></div><div class="word-break res-ori-body">${response['body']}</div></div>`).insertAfter('.response-body');
             imgEmpty('.res-ori-body');
-            calcHeight();
-            
         } else {
-            popupContent('avatar', 'name', 'username', 'datetime','body');
+            popupContent('avatar', 'name', 'username', 'datetime', 'body');
             imgEmpty('.response-body');
-            calcHeight();
         }
     });
 });
 
-// SAVE REPLY TO DATABASE
+// SAVE REPLY TO DB
 $(document).on('submit', '.comment-form', function (event) {
     event.preventDefault();
     let post_url = $(this).attr("action");
@@ -460,91 +450,26 @@ $(document).on('submit', '.comment-form', function (event) {
         type: request_method,
         data: form_data
     }).done(function () {
-        $(".comment-overlay, .comment-content").removeClass("active");
+        
+        $(".comment-overlay, .comment-content, .overlay-shade").removeClass("active");
         $('.comment-form').removeAttr('action');
         $("body").css("overflow", "visible");
         $(".load-tweets").load(`${url} .load-tweets-ajax`);
-    }).fail(function(xhr) {
-        console.log(xhr.responseJSON.errors);
-        $.each(xhr.responseJSON.errors, function(index, val) {
+
+    }).fail(function (xhr) {
+        // console.log(xhr.responseJSON.errors);
+        $.each(xhr.responseJSON.errors, function (index, val) {
             $('[name=' + index + ']');
-            $.each(val, function(i, error) {
+            $.each(val, function (i, error) {
                 $('.publish-errors-reply').html(error);
             });
         });
-
     });
 });
 
-
-
-
-
-
-
-
-
-
-
-
-    // UNRETWEET
-
-    $(document).ready(function () {
-        $(document).on('click', 'li.unretweet', function () {
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            let retweet_id = $(this).data('id');
-            let token = $('meta[name="csrf-token"]').attr('content');
-            let el = this;
-            let url = window.location.pathname;
-
-            $.ajax({
-                url: `/unretweets/${retweet_id}`,
-                type: 'DELETE',
-                data: {
-                    'id': retweet_id,
-                    '__token': token
-                }
-
-            }).done(function () {
-                let me = $(el).closest('.modal2'); // i need me[0] so i get dom el
-                $(me[0]).remove();
-
-                if(url.includes('/tweet/')) {
-                    $(".fi-so").load(`${url}  .fi-so-load`);
-                    $(".th-in").load(`${url}  .th-in-load`);
-                }
-                
-                $(".load-tweets").load(`${url}  .load-tweets-ajax`);
-            });
-        });
-    });
-
-    //AUTOCOMPLETE
-
-    // $('textarea.mention').mentionsInput({
-    //     onDataRequest:function (mode, query, callback) {
-    //     $.getJSON('a', function(responseData) {
-    //     responseData = _.filter(responseData, function(item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) &amp;gt; -1 });
-    //     callback.call(this, responseData);
-    //     });
-    //     }
-    //     });
-
-    // UPDATE BIO
-
-    $(document).on('submit', '.bio-form', function (event) {
-        event.preventDefault();
-        let post_url = $(this).attr("action");
-        let request_method = $(this).attr("method");
-        let el = this;
-        let url = window.location.pathname;
-        let form_data = $(this).serialize();
+// UNRETWEET
+$(document).ready(function () {
+    $(document).on('click', 'li.unretweet', function () {
 
         $.ajaxSetup({
             headers: {
@@ -552,184 +477,209 @@ $(document).on('submit', '.comment-form', function (event) {
             }
         });
 
+        let retweet_id = $(this).data('id');
+        let token = $('meta[name="csrf-token"]').attr('content');
+        let el = this;
+        let url = window.location.pathname;
+
         $.ajax({
-            url: post_url,
-            type: request_method,
-            data: form_data
+            url: `/unretweets/${retweet_id}`,
+            type: 'DELETE',
+            data: {
+                'id': retweet_id,
+                '__token': token
+            }
+
         }).done(function () {
-            $(".bio-overlay, .bio-content").removeClass("active");
-            $(".bio").load(`${url} .user-bio, .open-bio`);
-            $("body").css("overflow", "visible");
+            let me = $(el).closest('.modal2'); 
+            $(me[0]).remove();
+
+            if (url.includes('/tweet/')) {
+                $(".fi-so").load(`${url}  .fi-so-load`);
+                $(".th-in").load(`${url}  .th-in-load`);
+            }
+
+            $(".load-tweets").load(`${url}  .load-tweets-ajax`);
         });
     });
-    // end
+});
 
+// UPDATE BIO
+$(document).on('submit', '.bio-form', function (event) {
+    event.preventDefault();
+    let post_url = $(this).attr("action");
+    let request_method = $(this).attr("method");
+    let el = this;
+    let url = window.location.pathname;
+    let form_data = $(this).serialize();
 
-    //DELETE COMMENT
-
-    $(document).ready(function () {
-        $(document).on('click', 'li.delete-comment', function () {
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            let delete_id = $(this).data('id');
-            let token = $('meta[name="csrf-token"]').attr('content');
-            let el = this;
-            let url = window.location.pathname;
-
-            $.ajax({
-                url: `/tweets/comment/${delete_id}/delete`,
-                type: 'DELETE',
-                data: {
-                    'id': delete_id,
-                    '__token': token
-                }
-
-            }).done(function () {
-                let me = $(el).closest('.modal2'); // i need me[0] so i get dom el
-                $(me[0]).remove();
-                $(".load-tweets").load(`${url}  .load-tweets-ajax`);
-            });
-        });
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
 
-    //    // DYNAMIC PROFILE NAV LINKS
+    $.ajax({
+        url: post_url,
+        type: request_method,
+        data: form_data
+    }).done(function () {
+        $(".bio-overlay, .bio-content").removeClass("active");
+        $(".bio").load(`${url} .user-bio, .open-bio`);
+        $("body").css("overflow", "visible");
+    });
+});
 
-    //tweets and replies
-    $(document).ready(function () {
-        $(document).on('click', '.with-replies', function (e) {
-            e.preventDefault();
+
+//DELETE COMMENT
+$(document).ready(function () {
+    $(document).on('click', 'li.delete-comment', function () {
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        let delete_id = $(this).data('id');
+        let token = $('meta[name="csrf-token"]').attr('content');
+        let el = this;
+        let url = window.location.pathname;
+
+        $.ajax({
+            url: `/tweets/comment/${delete_id}/delete`,
+            type: 'DELETE',
+            data: {
+                'id': delete_id,
+                '__token': token
+            }
+
+        }).done(function () {
+            let me = $(el).closest('.modal2'); 
+            $(me[0]).remove();
+            $(".load-tweets").load(`${url}  .load-tweets-ajax`);
+        });
+    });
+});
+
+// DYNAMIC PROFILE NAV LINKS - replies
+$(document).ready(function () {
+    $(document).on('click', '.with-replies', function (e) {
+        e.preventDefault();
+
+        let url = window.location.pathname; // /profile/username/...
+        let splitted = url.split("");
+        let spliced = splitted.splice(9); // username/....
+
+        // Iterate over every char and if it encounters '/' break out of loop
+        let arr = [];
+        for (let i = 0; i < spliced.length; i++) {
+            if (spliced[i] == '/') {
+                break;
+            } else {
+                arr.push(spliced[i]);
+            }
+        }
+
+        let joined = arr.join("");
+
+        $.ajax({
+            url: `/profile/${joined}/with-replies-res`,
+            type: 'GET'
+
+        }).done(function (response) {
+            history.pushState({}, null, `/profile/${joined}/with-replies`);
+            $(".load-tweets").html(response['with-replies']);
+        });
+    });
+});
+
+// DYNAMIC PROFILE NAV LINKS - tweets
+$(document).ready(function () {
+    $(document).on('click', '.profile-tweets', function (e) {
+        e.preventDefault();
+        let url = window.location.pathname;
         
-            let url = window.location.pathname;
-            let splitted = url.split("");
-            let spliced = splitted.splice(9);
-
-            //after spliced before it was /profile/mincoder/...
-            // /mindcoder23/with-replies
-            // /mindcoder23/media
-            // /mindcoder23/links
-
-            // iterate over every char and if it encounters / break out of loop
-            let arr = [];
-            for (let i = 0; i < spliced.length; i++) {
-                if (spliced[i] == '/') {
-                    break;
-                } else {
-                    arr.push(spliced[i]);
-                }
+        let splitted = url.split("");
+        let spliced = splitted.splice(9);
+        let arr = [];
+        for (let i = 0; i < spliced.length; i++) {
+            if (spliced[i] == '/') {
+                break;
+            } else {
+                arr.push(spliced[i]);
             }
+        }
 
-            let joined = arr.join("");
+        let joined = arr.join("");
 
-            $.ajax({
-                url: `/profile/${joined}/with-replies-res`,
-                type: 'GET'
+        $.ajax({
+            url: `/profile/${joined}/tweets`,
+            type: 'GET'
 
-            }).done(function (response) {
-                // $(document).ajaxComplete(function(){ when ajax completes the request stop animatino loading spinner
-                //     $(".load-tweets").css("background", "white");
-                //   });
-                // console.log(response);
-                history.pushState({}, null, `/profile/${joined}/with-replies`);
-                $(".load-tweets").html(response['with-replies']);
-
-
-            });
+        }).done(function (response) {
+            history.pushState({}, null, `/profile/${joined}`);
+            $(".load-tweets").html(response['tweets-timeline']);
         });
     });
+});
 
-    //tweets nav link
-    $(document).ready(function () {
-        $(document).on('click', '.profile-tweets', function (e) {
-            e.preventDefault();
-            let url = window.location.pathname;
-            let splitted = url.split("");
-            let spliced = splitted.splice(9);
-            let arr = [];
-            for (let i = 0; i < spliced.length; i++) {
-                if (spliced[i] == '/') {
-                    break;
-                } else {
-                    arr.push(spliced[i]);
-                }
+// DYNAMIC PROFILE NAV LINKS - media
+$(document).ready(function () {
+    $(document).on('click', '.media', function (e) {
+        e.preventDefault();
+        let url = window.location.pathname;
+        
+        let splitted = url.split("");
+        let spliced = splitted.splice(9);
+        let arr = [];
+        for (let i = 0; i < spliced.length; i++) {
+            if (spliced[i] == '/') {
+                break;
+            } else {
+                arr.push(spliced[i]);
             }
+        }
 
-            let joined = arr.join("");
+        let joined = arr.join("");
 
-            $.ajax({
-                url: `/profile/${joined}/tweets`,
-                type: 'GET'
+        $.ajax({
+            url: `/profile/${joined}/media-res`,
+            type: 'GET'
 
-            }).done(function (response) {
-                history.pushState({}, null, `/profile/${joined}`);
-                $(".load-tweets").html(response['tweets-timeline']);
-
-            });
+        }).done(function (response) {
+            history.pushState({}, null, `/profile/${joined}/media`);
+            $(".load-tweets").html(response['media']);
         });
     });
+});
 
-    // media nav link
-    $(document).ready(function () {
-        $(document).on('click', '.media', function (e) {
-            e.preventDefault();
-            let url = window.location.pathname;
-            let splitted = url.split("");
-            let spliced = splitted.splice(9);
-            let arr = [];
-            for (let i = 0; i < spliced.length; i++) {
-                if (spliced[i] == '/') {
-                    break;
-                } else {
-                    arr.push(spliced[i]);
-                }
+// DYNAMIC PROFILE NAV LINKS - likes
+$(document).ready(function () {
+    $(document).on('click', '.likes-nav', function (e) {
+        e.preventDefault();
+        let url = window.location.pathname;
+        
+        let splitted = url.split("");
+        let spliced = splitted.splice(9);
+        let arr = [];
+        for (let i = 0; i < spliced.length; i++) {
+            if (spliced[i] == '/') {
+                break;
+            } else {
+                arr.push(spliced[i]);
             }
+        }
 
-            let joined = arr.join("");
-            console.log(joined);
+        let joined = arr.join("");
 
-            $.ajax({
-                url: `/profile/${joined}/media-res`,
-                type: 'GET'
+        $.ajax({
+            url: `/profile/${joined}/likes-res`,
+            type: 'GET'
 
-            }).done(function (response) {
-                history.pushState({}, null, `/profile/${joined}/media`);
-                $(".load-tweets").html(response['media']);
-
-            });
+        }).done(function (response) {
+            history.pushState({}, null, `/profile/${joined}/likes`);
+            $(".load-tweets").html(response['likes']);
         });
     });
-
-    // likes nav link
-
-    $(document).ready(function () {
-        $(document).on('click', '.likes-nav', function (e) {
-            e.preventDefault();
-            let url = window.location.pathname;
-            let splitted = url.split("");
-            let spliced = splitted.splice(9);
-            let arr = [];
-            for (let i = 0; i < spliced.length; i++) {
-                if (spliced[i] == '/') {
-                    break;
-                } else {
-                    arr.push(spliced[i]);
-                }
-            }
-
-            let joined = arr.join("");
-
-            $.ajax({
-                url: `/profile/${joined}/likes-res`,
-                type: 'GET'
-
-            }).done(function (response) {
-                history.pushState({}, null, `/profile/${joined}/likes`);
-                $(".load-tweets").html(response['likes']);
-
-            });
-        });
-    });
+});

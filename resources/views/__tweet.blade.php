@@ -1,4 +1,4 @@
-<div class="{{ $loop->last ? '' : 'border-b-1' }} border-gray-300 py-3 hover:bg-gray-blue thread">
+<div class="{{ $loop->last ? '' : 'border-b-1' }} border-gray-300 py-3 hover:bg-gray-blue thread"> 
     {{-- check if value exists in retweeted from which means its a retweetet, and check if comment is null, which means a tweet without a comment --}}
     @if(!is_null($tweet->retweeted_from) && is_null($tweet->comment)) 
     <div class="flex ml-4 items-center mb-1">
@@ -20,7 +20,7 @@
         </div>
     </div>
     @endif
-    <div class="flex">
+    <div class="flex calc-h">
         <a href="/profile/{{ $tweet->user->username }}" class="flex-shrink-0 ml-4 w-9 mr-2">
             <x-avatar-icon :tweet='$tweet' class="ml-2">
                 @if(!is_null($tweet->retweeted_from) && is_null($tweet->comment))

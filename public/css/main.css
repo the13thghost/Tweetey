@@ -41,6 +41,21 @@ body {
   background-color: #f5f8fa
 }
 
+/* viewport shade overlay */
+
+.overlay-shade {
+  visibility:hidden;
+  position:fixed;
+  top:0;
+  left:0;
+  background-color: #5152526e;
+
+}
+
+.overlay-shade.active {
+  visibility: visible;
+}
+
 /* popup for retweet w comment */
 
 .popup-overlay {

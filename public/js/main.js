@@ -1,13 +1,14 @@
 $(document).ready(function() {
 
-    // add images to container
+    // Add images to container
     $(".add-image").click(function () {
         $("input[id='gallery-photo-add']").click();
     });
 
     // Show div upon 3 dots svg click
-    $(document).on('click', 'svg.dots', function () {
-        $edit = $(this).get(0); // get current clicked dom element (with children)
+    $(document).on('click', 'svg.dots', function (e) {
+        e.stopPropagation();
+        $edit = $(this).get(0); // Get current clicked dom element (with children)
         $div_modal1 = $($edit).next(); 
         $($div_modal1).stop().fadeToggle();
     });
@@ -19,16 +20,14 @@ $(document).ready(function() {
     });
 
     // Active class on nav links
-
     $(document).on('click', '.tablist div', function() {
-        // console.log(this);
-        // let me= $('.tablist div.active-class')[0];
         $('div').removeClass('active-link');
         $(this).addClass("active-link");
     });
 
-    // Show popup div for retweeting 
-    $(document).on('click', '.retweet-click', function () { 
+    // Show popup div to retweet/unretweet or retweet with comment
+    $(document).on('click', '.retweet-click', function (e) { 
+        e.stopPropagation();
         $edit = $(this).get(0); 
         $div_modal1 = $($edit).next(); 
         $($div_modal1).stop().fadeIn();
@@ -40,7 +39,7 @@ $(document).ready(function() {
         });
     });
 
-    // Show popup that tweet was published
+    // Remove notification of successful tweet
     $(document).on('click', '.remove-notify', function () {
         $('.notify-published').css({
             'display': 'none'
@@ -48,14 +47,9 @@ $(document).ready(function() {
     });
 
     // Show popup to retweet with comment
-    $(document).on("click", ".open-popup", function () {
-        $(".popup-overlay, .popup-content").addClass("active");
+    $(document).on("click", ".open-popup", function (e) {
+        e.stopPropagation();
         $('.retweet-comment-form textarea').val('');
-
-        // Disable scroll
-        $("body").css({
-            "overflow": "hidden"
-        });
 
         $(document).mouseup(function (e) {
             if ($(e.target).closest(".popup-overlay").length === 0) {
@@ -65,13 +59,14 @@ $(document).ready(function() {
                 $('.counter-1 input').val(255);
                 $('.before-div').remove();
                 $('.images-comment').remove();
-                $(".popup-overlay, .popup-content").removeClass("active");
+                $(".popup-overlay, .popup-content, .overlay-shade").removeClass("active");
+                $(document).unbind('mouseup');
+ 
             }
         });
 
-        // Remove popup and show scrollbar
         $(".close").on("click", function () {
-            $(".popup-overlay, .popup-content").removeClass("active");
+            $(".popup-overlay, .popup-content, .overlay-shade").removeClass("active");
             $(".publish-errors-comment").html('');
             $('.counter-1 input').val(255);
             $('.images-comment').remove();
@@ -80,12 +75,10 @@ $(document).ready(function() {
     });
 
     // Show popup to reply
-    $(document).on("click", ".open-comment", function () {
-        $(".comment-overlay, .comment-content").addClass("active");
+    $(document).on("click", ".open-comment", function (e) {
+        e.stopPropagation();
         $(".comment-form textarea").val("");
-        $("body").css({
-            "overflow": "hidden"
-        });
+        
 
         $(document).mouseup(function (e) {
             if ($(e.target).closest(".comment-overlay").length === 0) {
@@ -96,23 +89,26 @@ $(document).ready(function() {
                 $('.before1-div').remove();
                 $('.images-reply').remove();
                 $('.original-tweet').remove();
-                $(".comment-overlay, .comment-content").removeClass("active");
+                $('.enter-h').removeAttr('style');
+                $(".comment-overlay, .comment-content, .overlay-shade").removeClass("active");
+                $(document).unbind('mouseup');
             }
         });
  
         $(".close").on("click", function () {
-            $(".comment-overlay, .comment-content").removeClass("active");
+            $(".comment-overlay, .comment-content, .overlay-shade").removeClass("active");
             $('.counter-3 input').val(255);
             $(".publish-errors-reply").html('');
             $('.original-tweet').remove();
             $('.images-reply').remove();
+            $('.enter-h').removeAttr('style');
             $("body").css("overflow", "visible");
         });
     });
 
     // Show popup to edit bio
     $(document).on("click", ".open-bio", function () {
-        $(".bio-overlay, .bio-content").addClass("active");
+        $(".bio-overlay, .bio-content, .overlay-shade").addClass("active");
         $(".bio-form textarea").val("");
         $("body").css({
             "overflow": "hidden"
@@ -124,15 +120,22 @@ $(document).ready(function() {
                 $("body").css("overflow", "visible");
                 $('.counter-2 input').val(140);
                 $('.before-div').remove();
-                $(".bio-overlay, .bio-content").removeClass("active");
+                $(".bio-overlay, .bio-content, .overlay-shade").removeClass("active");
+                $(document).unbind('mouseup');
+
             }
         });
 
         $(".close").on("click", function () {
-            $(".bio-overlay, .bio-content").removeClass("active");
+            $(".bio-overlay, .bio-content, .overlay-shade").removeClass("active");
             $('.counter-2 input').val(140);
             $("body").css("overflow", "visible");
         });
+    });
+
+    // Prevent redirecting to thread
+    $(document).on('click', 'div.submit-like, div.submit-dislike, li.retweet, li.unretweet, li.delete-post, li.pin-post', function(e) {
+        e.stopPropagation();
     });
 
     // Remove images from gallery after consequative click
@@ -141,26 +144,12 @@ $(document).ready(function() {
         $('.gallery').children().remove();
     });
 
-    // navigation to threads
-    // $(document).on('click', '.thread', function() {
-    //     let me = $(this).find('.open-comment').data('id');
-    //     window.location.href = `/tweet/${me}`;
+    // Navigation to threads
+    $(document).on('click', '.thread', function() {
+        let me = $(this).find('.open-comment').data('id');
+        window.location.href = `/tweet/${me}`;
         
-    // });
-
-    // enlarge thread social icons
-    if(window.location.href.includes('/tweet/')) {
-    //     $('.submit-like').first().removeClass('w-4').addClass('w-6');
-    //     $('.submit-dislike').first().removeClass('w-4').addClass('w-6');
-    //     $('.open-comment').first().children().first().addClass('w-6');
-    //     $('.retweet-click').first().removeClass('w-5').addClass('w-8');
-
-    $('.retweet-sec').first().addClass('f-el-aj');
-    $('.retweet-sec-load').first().addClass('f-el-aj-load');
-    }
-    
-
-
+    });
 });
 
 // Counter for publishing tweets/comments/replies

@@ -6,7 +6,7 @@
     src="{{ asset('/storage/' . $tweet->images[0]->image) }}" 
     alt="tweet image"
     class="object-cover rounded-xl border border-gray-400" 
-    style="width:553px;height:280px">
+    style="width:607px;height:300px">
 
 @elseif($tweet->images()->count() == 2)
 
@@ -16,14 +16,14 @@
             src="{{ asset('/storage/' . $tweet->images[0]->image) }}" 
             alt="tweet image"
             class="object-cover rounded-xl border border-gray-400" 
-            style="height:150px">
+            style="height:300px">
     </div>
     <div class="row-span-1 col-span-1">
         <img 
             src="{{ asset('/storage/' . $tweet->images[1]->image) }}" 
             alt="tweet image"
             class="object-cover rounded-xl border border-gray-400" 
-            style="height:150px">
+            style="height:300px">
     </div>
   </div>
 
@@ -35,21 +35,21 @@
             src="{{ asset('/storage/' . $tweet->images[0]->image) }}" 
             alt="tweet image"
             class="object-cover rounded-xl border border-gray-400" 
-            style="height:317px">
+            style="height:300px">
     </div>
     <div class="row-span-1 col-span-2">
         <img 
             src="{{ asset('/storage/' . $tweet->images[1]->image) }}" 
             alt="tweet image"
             class="object-cover rounded-xl border border-gray-400" 
-            style="height:150px">
+            style="height:141px">
     </div>
     <div class="row-span-2 col-span-2">
         <img 
             src="{{ asset('/storage/' . $tweet->images[2]->image) }}" 
             alt="tweet image"
             class="object-cover rounded-xl border border-gray-400" 
-            style="height:150px">
+            style="height:141px">
     </div>
 </div>
 
@@ -61,28 +61,31 @@
             src="{{ asset('/storage/' . $tweet->images[0]->image) }}" 
             alt="tweet image"
             class="object-cover rounded-xl border border-gray-400" 
-            style="height:150px">
+            style="height:141px;width:298px">
     </div>
     <div class="row-span-1 col-span-2">
         <img 
             src="{{ asset('/storage/' . $tweet->images[1]->image) }}" 
             alt="tweet image"
             class="object-cover rounded-xl border border-gray-400" 
-            style="height:150px">
+            style="height:141px;width:298px">
+
     </div>
     <div class="row-span-1 col-span-2">
         <img 
             src="{{ asset('/storage/' . $tweet->images[2]->image) }}" 
             alt="tweet image"
             class="object-cover rounded-xl border border-gray-400" 
-            style="height:150px">
+            style="height:141px;width:298px">
+
     </div>
     <div class="row-span-1 col-span-2">
         <img 
             src="{{ asset('/storage/' . $tweet->images[3]->image) }}" 
             alt="tweet image"
             class="object-cover rounded-xl border border-gray-400" 
-            style="height:150px">
+            style="height:141px;width:298px">
+
     </div>
 </div>
 @endif

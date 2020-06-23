@@ -5,7 +5,7 @@
                 {{ $tweet->user->avatar }}
             </x-avatar-icon>
         </a>
-        <div class="ml-1 mr-2 w-full">
+        <div class="ml-1 mr-2 w-full calc-h">
             <span class="font-bold">
                 {{ $tweet->user->name }}
             </span>

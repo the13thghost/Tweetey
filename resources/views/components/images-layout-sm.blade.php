@@ -5,12 +5,12 @@
     <img 
         src="{{ asset('/storage/' . $tweet->images[0]->image) }}" 
         alt="tweet image"
-        class="object-cover rounded-xl border border-gray-400" 
-        style="width:553px;height:230px">
+        class="object-cover rounded-xl border border-gray-400 calc-h-media" 
+        style="width:504px;height:230px">
     
     @elseif($tweet->images()->count() == 2)
     
-    <div class="grid grid-rows-1 grid-flow-col gap-4">
+    <div class="grid grid-rows-1 grid-flow-col gap-4 calc-h-media">
         <div class="row-span-1 col-span-1">
             <img 
                 src="{{ asset('/storage/' . $tweet->images[0]->image) }}" 
@@ -29,7 +29,7 @@
     
     @elseif($tweet->images()->count() == 3)
     
-    <div class="grid grid-rows-2 grid-flow-col gap-4">
+    <div class="grid grid-rows-2 grid-flow-col gap-4 calc-h-media">
         <div class="row-span-3">
             <img 
                 src="{{ asset('/storage/' . $tweet->images[0]->image) }}" 
@@ -55,7 +55,7 @@
     
     @elseif($tweet->images()->count() == 4)
     
-    <div class="grid grid-rows-2 grid-flow-col gap-4">
+    <div class="grid grid-rows-2 grid-flow-col gap-4 calc-h-media">
         <div class="row-span-1 col-span-2">
             <img 
                 src="{{ asset('/storage/' . $tweet->images[0]->image) }}" 

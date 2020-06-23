@@ -14,7 +14,7 @@ class ProfileController extends Controller
 {
     public function show(User $user) {
         $totalTweets = Tweet::where('user_id', $user->id)->count();
-        $tweets = Tweet::withLikes()->where('user_id', $user->id)->latest()->paginate(10);
+        $tweets = Tweet::withLikes()->where('user_id', $user->id)->latest()->get();
 
         return view('profile.show', [ 
             'tweets' => $tweets,
@@ -63,7 +63,7 @@ class ProfileController extends Controller
     //dynamic profile nav link : Tweets 
     public function tweetsNav(User $user) {
         $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
-        $tweets = Tweet::withLikes()->where('user_id', $user->id)->latest()->paginate(10);
+        $tweets = Tweet::withLikes()->where('user_id', $user->id)->latest()->get();
         
         return response()->json([
             'tweets-timeline' => view('__tweets-timeline',[ 
@@ -124,7 +124,7 @@ class ProfileController extends Controller
     public function mediaRes(User $user) {
         // find tweets with images for user
         $imagesArr = $user->images->pluck('tweet_id')->unique();
-        $tweets = Tweet::withLikes()->whereIn('tweets.id', $imagesArr)->latest()->paginate(10);
+        $tweets = Tweet::withLikes()->whereIn('tweets.id', $imagesArr)->latest()->get();
         return response()->json([
             'media' => view('__media',[ 
                 'user' => $user,
@@ -137,7 +137,7 @@ class ProfileController extends Controller
     public function media(User $user) {
         $imagesArr = $user->images->pluck('tweet_id')->unique();
         $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
-        $tweets = Tweet::withLikes()->whereIn('tweets.id', $imagesArr)->latest()->paginate(10);
+        $tweets = Tweet::withLikes()->whereIn('tweets.id', $imagesArr)->latest()->get();
         return view('profile.show',[ 
             'tweets' => $tweets,
             'user' => $user,
@@ -153,7 +153,7 @@ class ProfileController extends Controller
         // get tweets the user has liked, save by tweet_id
         // left join with likes table, sum likes and dislike, order by updated at from likes table
         $likesArr = $userParam->likes->where('like', 1)->pluck('tweet_id'); 
-        $tweets = Tweet::withUpdatedAt()->whereIn('tweets.id', $likesArr)->orderBy('updated_at_likes', 'DESC')->paginate(10);
+        $tweets = Tweet::withUpdatedAt()->whereIn('tweets.id', $likesArr)->orderBy('updated_at_likes', 'DESC')->get();
         return $tweets;
     }
 

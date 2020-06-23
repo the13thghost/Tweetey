@@ -2,7 +2,7 @@
         <div class="flex mb-3"> 
             <a href="/profile/{{ $tweet->user->username }}" class="flex-shrink-0 w-9 ml-4 mr-2">
                 <x-avatar-icon>{{$tweet->user->avatar}}</x-avatar-icon>
-                <div class="bg-gray-400 mt-1 enter-h mx-auto h-full" style="width:2px;"></div> <!-- gray line-->
+                <div class="bg-gray-400 mt-1 mx-auto h-full" style="width:2px;"></div> <!-- gray line-->
             </a>
             <div class="ml-1 mr-2 w-full calc-h">
                 <span class="font-bold">{{$tweet->user->name}}</span>
