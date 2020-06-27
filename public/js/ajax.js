@@ -523,7 +523,7 @@ $(document).on('submit', '.bio-form', function (event) {
         type: request_method,
         data: form_data
     }).done(function () {
-        $(".bio-overlay, .bio-content").removeClass("active");
+        $(".bio-overlay, .bio-content, .overlay-shade").removeClass("active");
         $(".bio").load(`${url} .user-bio, .open-bio`);
         $("body").css("overflow", "visible");
     });
