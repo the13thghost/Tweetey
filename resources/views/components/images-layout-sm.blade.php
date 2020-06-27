@@ -25,7 +25,7 @@
                 class="object-cover rounded-xl border border-gray-400" 
                 style="height:129px">
         </div>
-      </div>
+    </div>
     
     @elseif($tweet->images()->count() == 3)
     
@@ -86,4 +86,4 @@
         </div>
     </div>
     @endif
-    </div>
+</div>

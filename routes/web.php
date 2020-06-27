@@ -13,12 +13,13 @@ Route::middleware('auth')->group(function() {
     Route::get('/tweets', 'TweetController@index')->name('home');
     Route::post('/tweets', 'TweetController@store');
     Route::post('/retweets/{tweet}', 'TweetController@retweet');
-    Route::get('/tweet/{tweet}', 'TweetController@show'); //thread
+    Route::get('/tweet/{tweet}', 'TweetController@show'); // Thread
     Route::post('/retweets/{tweet}/getTweet', 'TweetController@getTweet'); 
     Route::post('/retweets/{tweet}/comment', 'TweetController@retweetComment');
     Route::put('/profile/{user}/bio', 'ProfileController@updateBio');
     Route::post('/replies/{tweet}', 'ReplyController@store'); 
-    //dynamic nav
+    
+    // Dynamic nav
     Route::get('/profile/{user:username}/with-replies-res', 'ProfileController@withRepliesRes');
     Route::get('/profile/{user:username}/with-replies', 'ProfileController@withReplies');
     Route::get('/profile/{user:username}/tweets', 'ProfileController@tweetsNav');
@@ -26,8 +27,6 @@ Route::middleware('auth')->group(function() {
     Route::get('/profile/{user:username}/media', 'ProfileController@media');
     Route::get('/profile/{user:username}/likes-res', 'ProfileController@likesRes');
     Route::get('/profile/{user:username}/likes', 'ProfileController@likes');
-
-
 
     Route::delete('/unretweets/{tweet}', 'TweetController@unretweet');
     Route::post('/profile/{user:username}/follow', 'FollowsController');

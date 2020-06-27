@@ -1,4 +1,4 @@
-    {{-- popup --}}
+    {{-- Popup --}}
     <div class="popup-overlay border-t border-gray-300 z-50" style="height:auto">
         <div style="height:53px" class="border-l border-r border-b border-gray-300 sticky top-0 z-10 bg-white">
             <div class="text-left py-4 ml-3">
@@ -116,7 +116,6 @@
                         <span class="text-gray-600">&middot;</span>
                         <span class="text-gray-600 datetime"></span>
                         <div class="response-body word-break-popup"></div>
-                        {{-- <x-images-layout></x-images-layout> --}}
                         <div class="mt-2">
                             <span class="text-gray-600">Replying to </span>
                             <span class="response-username text-blue-900"></span>

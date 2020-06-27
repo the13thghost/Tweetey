@@ -5,7 +5,8 @@
 use App\Follows;
 use App\User;
 
-$factory->define(Follows::class, function () {
+$factory->define(Follows::class, function () 
+{
     return [
         'user_id' => factory(User::class),
         'following_user_id' => factory(User::class)

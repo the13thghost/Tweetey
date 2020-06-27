@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 
 class ReplyController extends Controller
 {
-    public function store(Tweet $tweet) {
-
+    public function store(Tweet $tweet) 
+    {
         $attributes = request()->validate([
             'reply' => ['required', 'min:1', 'max:255'],
         ]);

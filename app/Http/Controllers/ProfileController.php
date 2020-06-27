@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Image;
 use App\Reply;
 use App\Tweet;
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Validation\Rule as ValidationRule;
 
 class ProfileController extends Controller 
 {
-    public function show(User $user) {
+    public function show(User $user) 
+    {
         $totalTweets = Tweet::where('user_id', $user->id)->count();
         $tweets = Tweet::withLikes()->where('user_id', $user->id)->latest()->get();
 
@@ -24,11 +23,13 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function edit(User $user) {
+    public function edit(User $user) 
+    {
         return view('profile.edit', compact('user'));
     }
 
-    public function update(User $user) {
+    public function update(User $user) 
+    {
         $attributes = request()->validate([
             'name' => ['string', 'max:255', 'required'],
             'username' => ['required', 'string', 'alpha_dash', 'max:255', 'min:6', ValidationRule::unique('users')->ignore($user)],
@@ -50,7 +51,8 @@ class ProfileController extends Controller
         return redirect($user->path());
     }
 
-    public function updateBio(User $user) {
+    public function updateBio(User $user) 
+    {
         $validatedAttributes = request()->validate([
             'bio' => ['string', 'max:140', 'min:1', 'required']
         ]);
@@ -60,8 +62,9 @@ class ProfileController extends Controller
         ]);
     }
 
-    //dynamic profile nav link : Tweets 
-    public function tweetsNav(User $user) {
+    // Dynamic profile nav link : Tweets 
+    public function tweetsNav(User $user) 
+    {
         $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
         $tweets = Tweet::withLikes()->where('user_id', $user->id)->latest()->get();
         
@@ -75,9 +78,9 @@ class ProfileController extends Controller
         ]);
     }
 
-    //dynamic profile nav link : Tweets & Replies 
-
-    public function tweetsWithReplies($userParam) {
+    // Dynamic profile nav link : Replies 
+    public function tweetsWithReplies($userParam) 
+    {
         $repliesArr = Reply::where('user_id', $userParam)->select('tweet_id', 'id', 'created_at')->get();
         $tweetsOrder = collect(); 
 
@@ -88,7 +91,7 @@ class ProfileController extends Controller
             $tweetsOrder->push($tweet);
         }
         
-        // sort tweets by time of reply
+        // Sort by time of reply
         $tweets = $tweetsOrder->sortByDesc(function($item) {
             return $item->reply_created_at;
         });
@@ -96,8 +99,8 @@ class ProfileController extends Controller
         return $tweets;
     }
 
-    public function withRepliesRes(User $user) {
-        
+    public function withRepliesRes(User $user) 
+    {
         return response()->json([
             'with-replies' => view('__with-replies',[ 
                 'tweets' => $this->tweetsWithReplies($user->id), 
@@ -107,7 +110,8 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function withReplies(User $user) {
+    public function withReplies(User $user) 
+    {
         $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
         return view('profile.show',[ 
             'tweets' => $this->tweetsWithReplies($user->id),
@@ -116,13 +120,12 @@ class ProfileController extends Controller
             'totalTweets' => $totalTweets,
             'yesterday' => carbonTime()
         ]);
-
     }
 
-    //dynamic profile nav link : media (show users original tweets with media, no retweets)
-
-    public function mediaRes(User $user) {
-        // find tweets with images for user
+    // Dynamic profile nav link : Media
+    public function mediaRes(User $user) 
+    {
+        // Find tweets with images 
         $imagesArr = $user->images->pluck('tweet_id')->unique();
         $tweets = Tweet::withLikes()->whereIn('tweets.id', $imagesArr)->latest()->get();
         return response()->json([
@@ -134,7 +137,8 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function media(User $user) {
+    public function media(User $user) 
+    {
         $imagesArr = $user->images->pluck('tweet_id')->unique();
         $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
         $tweets = Tweet::withLikes()->whereIn('tweets.id', $imagesArr)->latest()->get();
@@ -147,18 +151,18 @@ class ProfileController extends Controller
         ]);
     }
 
-    //dynamic profile nav link : likes
-
-    public function tweetsWithLikes($userParam) {
-        // get tweets the user has liked, save by tweet_id
-        // left join with likes table, sum likes and dislike, order by updated at from likes table
+    // Dynamic profile nav link : Likes
+    public function tweetsWithLikes($userParam) 
+    {
+        // Get tweets the user has liked > save by tweet_id 
+        // > left join with likes table > sum likes and dislikes > order by updated_at from likes table
         $likesArr = $userParam->likes->where('like', 1)->pluck('tweet_id'); 
         $tweets = Tweet::withUpdatedAt()->whereIn('tweets.id', $likesArr)->orderBy('updated_at_likes', 'DESC')->get();
         return $tweets;
     }
 
-    public function likesRes(User $user) {
-        
+    public function likesRes(User $user) 
+    {
         return response()->json([
             'likes' => view('__likes',[ 
                 'user' => $user,
@@ -168,7 +172,8 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function likes(User $user) {
+    public function likes(User $user) 
+    {
         $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
         return view('profile.show',[ 
             'tweets' => $this->tweetsWithLikes($user),
@@ -178,5 +183,4 @@ class ProfileController extends Controller
             'dynamicLikes' => true
         ]);
     }
-    
 }

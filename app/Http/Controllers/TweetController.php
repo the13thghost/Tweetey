@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ProductPurchased;
 use App\Image;
-use App\Notifications\TweetPublished;
 use App\Reply;
 use App\Retweet;
 use App\Tweet;
@@ -17,28 +15,27 @@ class TweetController extends Controller
 {
     public function index(User $user) 
     { 
-        $yesterday = Carbon::now()->subDay(); // calculate if tweet is more than 24 hours old
         $totalTweets = Tweet::withLikes()->where('user_id', $user->id)->count();
         return view('tweets.index', [
             'tweets' => auth()->user()->timeline(),
-            'yesterday' => $yesterday,
+            'yesterday' => carbonTime(),
             'user' => $user,
             'totalTweets' => $totalTweets
         ]);
     }
 
-        
-    //thread - combination of replies and retweets with comments
-    public function show(Tweet $tweet, User $user) {
+    // Thread
+    public function show(Tweet $tweet, User $user) 
+    {
         if(is_null($tweet->retweeted_from)) {
             $tweet = Tweet::withLikes()->where('id', $tweet->id)->first();;
         } else {
             $tweet = Tweet::withLikes()->where('id', $tweet->retweeted_from)->first();
         }
+
         $replies = Reply::where('tweet_id', $tweet->id)->get();
         $retweets = Tweet::withLikes()->where('retweeted_from', $tweet->id)->whereNotNull('comment')->get();
-
-        $repliesTweets = $replies->toBase()->merge($retweets)->sortByDesc('created_at'); //combine the 2 collections
+        $repliesTweets = $replies->toBase()->merge($retweets)->sortByDesc('created_at'); // Combine the 2 collections
 
         return view('tweets.show', [
             'tweet' => $tweet,
@@ -48,8 +45,8 @@ class TweetController extends Controller
         ]);
     }
 
-    public function store() {
-
+    public function store() 
+    {
         $attributes = request()->validate([
             'image' => [function($attribute, $value, $fail) {
                 if(count($value) > 4) {
@@ -65,11 +62,10 @@ class TweetController extends Controller
             'body' => $attributes['body']
         ]);
 
-       $tweet_id = $tweet->id; // get the currents tweet id from DB
+       $tweet_id = $tweet->id; // Get the current tweets id from DB
 
-        if(request('image')) { // for each image save a record in DB
+        if(request('image')) { // For each image save a record in DB
             foreach(request('image') as $image) {
-                // dump($image);
                 Image::create([
                     'user_id' => auth()->id(),
                     'tweet_id' => $tweet_id,
@@ -81,38 +77,38 @@ class TweetController extends Controller
         return back();
     }
 
-    public function destroy(Tweet $tweet) {
-        if($tweet->retweeted_from == null && $tweet->comment == null) { 
-            // $tweet->delete();
-            $imagesDelete = Image::where('tweet_id', $tweet->id)->get();
+    // EDIT
+    // public function destroy(Tweet $tweet) {
+    //     if($tweet->retweeted_from == null && $tweet->comment == null) { 
+    //         // $tweet->delete();
+    //         $imagesDelete = Image::where('tweet_id', $tweet->id)->get();
 
-            //set everys retweet retweeted_from to something like 0 so we know it was deleted
-            $changeRetweets = Tweet::where('retweeted_from', $tweet->id)->get();
-            foreach($changeRetweets as $change) {
-                $change->retweeted_from = 13;
-            }
+    //         // Set every retweets retweeted_from to something like 0 so we know it was deleted
+    //         $changeRetweets = Tweet::where('retweeted_from', $tweet->id)->get();
+    //         foreach($changeRetweets as $change) {
+    //             $change->retweeted_from = 13;
+    //         }
 
-            if($imagesDelete) {
-                foreach($imagesDelete as $delete) {
-                    $delete->delete();
-                }
-            }
-        }
-    }
-
-    // } else {
-    // if(is_null($tweet->comment)) {
-    //     Retweet::where('tweet_id', $tweet->retweeted_from)->where('user_id', auth()->id())->where('comment', 0)->where('created_at', $tweet->created_at)->delete();
-    // } elseif(!is_null($tweet->comment)) {
-    //     // the retweet was with a comment so only delete that
-    //     Retweet::where('tweet_id', $tweet->retweeted_from)->where('user_id', auth()->id())->where('comment', 1)->where('created_at', $tweet->created_at)->delete();
+    //         if($imagesDelete) {
+    //             foreach($imagesDelete as $delete) {
+    //                 $delete->delete();
+    //             }
+    //         }
+    //     }
+    //     else {
+    //         if(is_null($tweet->comment)) {
+    //             Retweet::where('tweet_id', $tweet->retweeted_from)->where('user_id', auth()->id())->where('comment', 0)->where('created_at', $tweet->created_at)->delete();
+    //         } elseif(!is_null($tweet->comment)) {
+    //             // the retweet was with a comment so only delete that
+    //             Retweet::where('tweet_id', $tweet->retweeted_from)->where('user_id', auth()->id())->where('comment', 1)->where('created_at', $tweet->created_at)->delete();
+    //         }
+    //         $tweet->delete();
+    //         }
     // }
-    // $tweet->delete();
-    
-    // }
     
 
-    public function retweet(Tweet $tweet) { 
+    public function retweet(Tweet $tweet) 
+    { 
         if(!is_null($tweet->retweeted_from)) {
             Tweet::create([
                 'user_id' => auth()->id(),
@@ -139,12 +135,10 @@ class TweetController extends Controller
         }       
     }
 
-    public function unretweet(Tweet $tweet) {
+    public function unretweet(Tweet $tweet) 
+    {
+        // Delete all retweets associated with it (where retweeted_from equals its id) && are my retweets > keep the original tweet
         if($tweet->retweeted_from == null && $tweet->comment == null) { // original tweet
-            // delete all retweets associated with it (where retweeted_from equals its id) and are my retweets
-            // keep the original tweet
-
-            // find auth user tweet
             $deleteRetweet = Tweet::where('retweeted_from', $tweet->id)->where('user_id', auth()->id())->where('comment', null);
             $deleteRetweet->delete();
 
@@ -157,13 +151,11 @@ class TweetController extends Controller
             
             // }
 
-            // delete the retweet from retweets table
+            // Delete the retweet from retweets table
             Retweet::where('tweet_id', $tweet->id)->where('user_id', auth()->id())->where('comment', 0)->delete();
-            
-
+    
         } else {
-        // the tweet is a retweet with or without a comment
-        // delete retweet record from tweets table by tweet_id and from retweets table
+        // The tweet is a retweet with or without a comment > delete retweet record from tweets table by tweet_id and from retweets table
             if(is_null($tweet->comment)) {
                 Retweet::where('tweet_id', $tweet->retweeted_from)->where('user_id', auth()->id())->where('comment', 0)->where('created_at', $tweet->created_at)->delete();
             } elseif(!is_null($tweet->comment)) {
@@ -174,12 +166,8 @@ class TweetController extends Controller
     }
 
     // Check if images collection is empty > if so no need to render a view 
-    public function imgEmpty($imgParam, $varParam) {
-        
-        // $images = Image::where('tweet_id', request('id'))->get();
-        // $tweet = Tweet::where('id', request('id'))->first();
-        // $images1 = Tweet::where('id', $tweet->retweeted_from)->first();
-        
+    public function imgEmpty($imgParam, $varParam) 
+    {        
         if($imgParam->isEmpty()) {
             return 0;
         } else {
@@ -190,17 +178,17 @@ class TweetController extends Controller
     }
 
     public function getTweet() {
-        //get the time the tweet was created and convert accordingly
-        $yesterday = Carbon::now()->subDay(); // calculate if tweet is more than 24 hours old
         $tweet = Tweet::where('id', request('id'))->first();
         $images = Image::where('tweet_id', request('id'))->get();
 
-        if($tweet->created_at < $yesterday) {
+        if($tweet->created_at < carbonTime()) {
             $datetime = $tweet->created_at->format('M d, Y');
         } else {
             $datetime = $tweet->created_at->diffForHumans();
         }
-        if($tweet->retweeted_from == null && $tweet->comment == null) { // original tweet
+        
+        // Original tweet
+        if($tweet->retweeted_from == null && $tweet->comment == null) { 
             return response()->json([
                 'id' => $tweet->id,
                 'body' => $tweet->body,
@@ -210,12 +198,14 @@ class TweetController extends Controller
                 'datetime' => $datetime,
                 'images' => $this->imgEmpty($images, $tweet)
             ]);
-        } elseif(!is_null($tweet->retweeted_from)) { // a retweet with a comment
+
+        // A retweet with a comment
+        } elseif(!is_null($tweet->retweeted_from)) { 
             
             $tweet1 = Tweet::where('id', $tweet->retweeted_from)->first();
             $images1 = Image::where('tweet_id', $tweet->retweeted_from)->get();
 
-            if($tweet1->created_at < $yesterday) {
+            if($tweet1->created_at < carbonTime()) {
                 $datetime1 = $tweet1->created_at->format('M d, Y');
             } else {
                 $datetime1 = $tweet1->created_at->diffForHumans();
@@ -237,10 +227,9 @@ class TweetController extends Controller
         }
     }
 
-    public function retweetComment(Tweet $tweet) {
-
-        //validation (if comment area is empty > can't retweet)
-
+    public function retweetComment(Tweet $tweet) 
+    {
+        // Validation > if comment area is empty > can't retweet
         $attributes = request()->validate([
             'body' => ['required', 'min:1', 'max:255']
         ]);
@@ -276,20 +265,8 @@ class TweetController extends Controller
         }
     }
 
-    public function deleteComment(Tweet $twet) {
+    // public function deleteComment(Tweet $twet) 
+    // {
 
-    }
-
-    // public function search(Request $request) {
-    //     $data = Tweet::select("body")
-    //             ->where("body","LIKE","%{$request->input('query')}%")
-    //             ->get();
-   
-    //     $data1 = array();
-    //     foreach ($data as $dat)
-    //         {
-    //             $data1[] = $dat->body;
-    //         }
-    //     return response()->json($data1);
     // }
 }

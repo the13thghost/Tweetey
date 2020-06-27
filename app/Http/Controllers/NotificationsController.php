@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 class NotificationsController extends Controller
 {
-    //
-    public function publishedTweet() {
+    public function publishedTweet() 
+    {
         // $notification = auth()->user()->notifications->first();
         // $notification->markAsRead();
         // return 

@@ -19,40 +19,40 @@
 {{-- Retweet btn --}}
 <div class="w-1/4 text-center relative retweet-sec">
     <div class="retweet-sec-load">
-    <svg viewBox="0 0 20 20" class="w-5  
-    @if(current_user()->retweeted($tweet) OR $tweet->retweetsFromAuthUser() OR current_user()->retweetedOri($tweet))
-    text-green-600
-    @else
-    text-gray-500
-    @endif
-    cursor-pointer retweet-click">
-        <g class="fill-current">
-            <path
-                d="M4.99201702,4 C3.8918564,4 3,4.88670635 3,5.99810135 L3,12 L0,12 L4,16 L8,12 L5,12 L5,6 L12,6 L14,4 L4.99201702,4 Z M15,8 L12,8 L16,4 L20,8 L17,8 L17,14.0018986 C17,15.1054196 16.0998238,16 15.007983,16 L6,16 L8,14 L15,14 L15,8 Z"
-                id="Combined-Shape"></path>
-        </g>
-    </svg>
-    <div class="hidden absolute z-10 h-8 w-8 bg-white shadow modal2"
-        style="top:4px;right:78px; width:180px; height:auto">
-        <ul class="text-sm text-gray-800 p-2">
-            @if((current_user()->retweeted($tweet) AND
-            current_user()->retweetedComment($tweet)) OR
-            $tweet->retweetsFromAuthUser() OR current_user()->retweetedOri($tweet))
-            <li data-id="{{ $tweet->id }}" class="border-b mb-1 pb-1 cursor-pointer unretweet">
-                Unretweet
-            </li>
-            @else
-            <li data-id="{{ $tweet->id }}" class="border-b mb-1 pb-1 cursor-pointer retweet">
-                Retweet
-            </li>
-            @endif
-            <li data-id="{{ $tweet->id }}" class="cursor-pointer retweet-comment open-popup">
-                Retweet with comment
-            </li>
-        </ul>
+        <svg viewBox="0 0 20 20" class="w-5  
+        @if(current_user()->retweeted($tweet) OR $tweet->retweetsFromAuthUser() OR current_user()->retweetedOri($tweet))
+        text-green-600
+        @else
+        text-gray-500
+        @endif
+        cursor-pointer retweet-click">
+            <g class="fill-current">
+                <path
+                    d="M4.99201702,4 C3.8918564,4 3,4.88670635 3,5.99810135 L3,12 L0,12 L4,16 L8,12 L5,12 L5,6 L12,6 L14,4 L4.99201702,4 Z M15,8 L12,8 L16,4 L20,8 L17,8 L17,14.0018986 C17,15.1054196 16.0998238,16 15.007983,16 L6,16 L8,14 L15,14 L15,8 Z"
+                    id="Combined-Shape"></path>
+            </g>
+        </svg>
+        <div class="hidden absolute z-10 h-8 w-8 bg-white shadow modal2"
+            style="top:4px;right:78px; width:180px; height:auto">
+            <ul class="text-sm text-gray-800 p-2">
+                @if((current_user()->retweeted($tweet) AND
+                current_user()->retweetedComment($tweet)) OR
+                $tweet->retweetsFromAuthUser() OR current_user()->retweetedOri($tweet))
+                <li data-id="{{ $tweet->id }}" class="border-b mb-1 pb-1 cursor-pointer unretweet">
+                    Unretweet
+                </li>
+                @else
+                <li data-id="{{ $tweet->id }}" class="border-b mb-1 pb-1 cursor-pointer retweet">
+                    Retweet
+                </li>
+                @endif
+                <li data-id="{{ $tweet->id }}" class="cursor-pointer retweet-comment open-popup">
+                    Retweet with comment
+                </li>
+            </ul>
+        </div>
+        <div class="items-center absolute text-sm text-gray-500 retweets-count" style="top:0;left:26px">
+            {{ $tweet->retweetsNumber() ? $tweet->retweetsNumber() : '' }}
+        </div>
     </div>
-    <div class="items-center absolute text-sm text-gray-500 retweets-count" style="top:0;left:26px">
-        {{ $tweet->retweetsNumber() ? $tweet->retweetsNumber() : '' }}
-    </div>
-</div>
 </div>

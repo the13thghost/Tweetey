@@ -110,23 +110,23 @@
         <div class="load-tweets-ajax dynamic-load">
             @if(isset($dynamicReplies))
 
-                @include('__with-replies')
+            @include('__with-replies')
 
 
             @elseif(isset($dynamicMedia))
 
-                @include('__media')
+            @include('__media')
 
             @elseif(isset($dynamicLikes))
 
-                @include('__likes')
+            @include('__likes')
 
             @else
 
             @forelse($tweets as $tweet)
 
-                @include('__tweet')
-           
+            @include('__tweet')
+
             @empty
             @can('noTweetsMsg', $user)
             <div class="text-lg text-center m-3 text-gray-500">You don't have any tweets yet</div>
@@ -136,8 +136,6 @@
             @endcannot
             @endforelse
             @endif
-            
-   
         </div>
     </section>
     <x-popups :user="$user"></x-popups>

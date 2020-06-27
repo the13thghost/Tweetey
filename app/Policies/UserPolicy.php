@@ -10,14 +10,16 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    public function edit(User $currentuser, User $user) {
+    public function edit(User $currentuser, User $user) 
+    {
         return $currentuser->is($user)
                 ? Response::allow()
-                : Response::deny('The page you are looking for can\'t be accessed :(');
+                : Response::deny('The page you are looking for can\'t be accessed');
         
     } 
 
-    public function noTweetsMsg(User $currentuser, User $user) {
+    public function noTweetsMsg(User $currentuser, User $user) 
+    {
         return $currentuser->is($user);
     }
 }

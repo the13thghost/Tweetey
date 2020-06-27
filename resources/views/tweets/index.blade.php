@@ -1,11 +1,11 @@
 <x-app>
     @include('__publish-panel') 
 
-    <section class="border border-gray-300 mb-6 tweets-1 load-tweets thread">
+    <section class="border border-gray-300 mb-6 tweets-1 load-tweets thread cursor-pointer">
         <div class="tweets-fresh load-tweets-ajax">
             @forelse($tweets as $tweet)
             <div class="{{ $loop->last ? '' : 'border-b-1' }} border-gray-300 py-3 hover:bg-gray-blue">
-                {{-- check if value exists in retweeted from which means its a retweetet, and check if comment is null, which means a tweet without a comment --}}
+                {{-- check if value exists in retweeted_from > its a retweetet && check if comment is nul > its a tweet without a comment --}}
                 @if(!is_null($tweet->retweeted_from) && is_null($tweet->comment)) 
                 <div class="flex ml-4 items-center mb-1">
                     <div class="text-right" style="width:44px;padding-left:30px">
@@ -39,9 +39,9 @@
                     <div class="ml-1 mr-2 w-full">
                         <span class="font-bold">
                             @if(!is_null($tweet->retweeted_from) && is_null($tweet->comment))
-                            <a href="/profile/{{$tweet->retweetOrigi()->user->username}}">{{$tweet->retweetOrigi()->user->name}}</a>
+                            <a href="{{route('profile', ['user' => $tweet->retweetOrigi()->user->username])}}">{{$tweet->retweetOrigi()->user->name}}</a>
                             @else
-                            <a href="/profile/{{$tweet->user->username}}">{{ $tweet->user->name }}</a>
+                        <a href="{{route('profile', ['user' => $tweet->user->username])}}">{{ $tweet->user->name }}</a>
                             @endif
                         </span>
                         <span class="text-gray-600">
@@ -51,7 +51,6 @@
                             {{ '@' . $tweet->user->username }}
                             @endif
                         </span>
-                        {{-- Time of tweet --}}
                         <span class="text-gray-600">&middot;
                             @if(!is_null($tweet->retweeted_from) && is_null($tweet->comment))
                             @if($tweet->retweetOrigi()->created_at < $yesterday)
@@ -74,10 +73,12 @@
                         <div class="border border-gray-400 rounded-xlt p-3">
                             <div class="flex items-center" style="font-size:15px">
                                 <div>
+                                <a href="{{route('profile', ['user' => $tweet->retweetOrigi()->user->username])}}">
                                     <img class="rounded-full object-cover mr-2" style="width:20px;height:20px"
                                         src="{{ $tweet->retweetOrigi()->user->avatar }}">
                                     </div>
-                                <div class="mr-2 font-bold">{{ $tweet->retweetOrigi()->user->name }}</div>
+                                </a>
+                            <div class="mr-2 font-bold"><a href="{{route('profile', ['user' => $tweet->retweetOrigi()->user->username])}}">{{$tweet->retweetOrigi()->user->name}}</a></div>
                                 <div class="text-gray-600 mr-1">{{'@' . $tweet->retweetOrigi()->user->username}}</div>
                                 <div class="text-gray-600">&middot;
                                 @if($tweet->retweetOrigi()->created_at < $yesterday)

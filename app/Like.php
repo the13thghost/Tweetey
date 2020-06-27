@@ -8,7 +8,8 @@ class Like extends Model
 {
     protected $fillable = ['user_id','like', 'dislike'];
 
-    public function user() {
+    public function user() 
+    {
         return $this->belongsTo(User::class);
     }
 }

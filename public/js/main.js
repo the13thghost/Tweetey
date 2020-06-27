@@ -148,8 +148,15 @@ $(document).ready(function() {
     $(document).on('click', '.thread', function() {
         let me = $(this).find('.open-comment').data('id');
         window.location.href = `/tweet/${me}`;
-        
     });
+
+    // Navigation to sub threads
+    $(document).on('click', '.sub-thread', function() {
+        let me = $(this).find('.open-comment').data('id');
+        window.location.href = `/tweet/${me}`;
+    });
+
+
 });
 
 // Counter for publishing tweets/comments/replies

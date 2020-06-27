@@ -218,7 +218,7 @@ $('#publish').on('submit', function (event) {
             $('.gallery').children().remove();
             $(".counter-1").load(`${url}  .counter-fresh`);
             $(".tweets-1").load(`${url}  .tweets-fresh`);
-            $('#gallery-photo-add').val(''); //empty out the input
+            $('#gallery-photo-add').val(''); // Empty out the input
         });
 
         $(".notify-published").fadeIn(function () {
@@ -267,7 +267,7 @@ $(document).ready(function () {
             let me = $(el).closest('.modal2');
             $(me[0]).remove();
 
-            //thread page, refresh likes, dislikes ...
+            // Thread page, refresh likes, dislikes ...
             if (url.includes('/tweet/')) {
                 $(".fi-so").load(`${url}  .fi-so-load`);
                 $(".th-in").load(`${url}  .th-in-load`);
@@ -349,7 +349,7 @@ $(document).on('submit', '.retweet-comment-form', function (event) {
         $('.retweet-comment-form').removeAttr('action');
         $(".publish-errors-comment").html('');
 
-        //thread page, refresh likes, dislikes ...
+        // Thread page, refresh likes, dislikes ...
         if (url.includes('/tweet/')) {
             $(".fi-so").load(`${url}  .fi-so-load`);
             $(".th-in").load(`${url}  .th-in-load`);
@@ -457,7 +457,6 @@ $(document).on('submit', '.comment-form', function (event) {
         $(".load-tweets").load(`${url} .load-tweets-ajax`);
 
     }).fail(function (xhr) {
-        // console.log(xhr.responseJSON.errors);
         $.each(xhr.responseJSON.errors, function (index, val) {
             $('[name=' + index + ']');
             $.each(val, function (i, error) {

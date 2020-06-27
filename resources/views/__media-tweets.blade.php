@@ -1,14 +1,14 @@
-<div class="{{ $loop->last ? '' : 'border-b-1' }} border-gray-300 py-3 hover:bg-gray-blue thread">
+<div class="{{ $loop->last ? '' : 'border-b-1' }} border-gray-300 py-3 hover:bg-gray-blue thread cursor-pointer">
     <div class="flex">
-        <a href="/profile/{{ $tweet->user->username }}" class="flex-shrink-0 ml-4 w-9 mr-2">
+        <a href="{{route('profile', ['user' => $tweet->user->username])}}" class="flex-shrink-0 ml-4 w-9 mr-2">
             <x-avatar-icon :tweet='$tweet' class="ml-2">
                 {{ $tweet->user->avatar }}
             </x-avatar-icon>
         </a>
         <div class="ml-1 mr-2 w-full calc-h">
             <span class="font-bold">
-                <a href="/profile/{{ $tweet->user->username }}">
-                {{ $tweet->user->name }}
+                <a href="{{route('profile', ['user' => $tweet->user->username])}}">
+                    {{ $tweet->user->name }}
                 </a>
             </span>
             <span class="text-gray-600">
@@ -19,7 +19,7 @@
                 @if($tweet->created_at < $yesterday)
                     {{ $tweet->created_at->format('M d, Y') }} 
                 @else
-                {{ $tweet->created_at->diffForHumans() }} 
+                    {{ $tweet->created_at->diffForHumans() }} 
                 @endif 
             </span> 
             <div class="word-break">
@@ -35,6 +35,6 @@
             </div>
         </div>
         <x-tweet-options :tweet="$tweet"></x-tweet-options>
-        </div>
     </div>
-    <hr class="line">
+</div>
+<hr class="line">

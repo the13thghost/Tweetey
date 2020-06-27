@@ -11,43 +11,50 @@ class Tweet extends Model
 
     protected $fillable = ['user_id', 'body', 'retweeted_from', 'comment'];
 
-    public function user() { 
+    public function user() 
+    { 
         return $this->belongsTo(User::class);
     }
 
-    public function likes() {
+    public function likes() 
+    {
         return $this->hasMany(Like::class);
     }
 
-    public function images() {
+    public function images() 
+    {
         return $this->hasMany(Image::class);
     }
  
-    public function retweets() { 
+    public function retweets() 
+    { 
         return $this->hasMany(Retweet::class);
     }
 
-    public function replies() {
+    public function replies() 
+    {
         return $this->hasMany(Reply::class);
     }    
 
-    public function retweetsNumber() {
+    public function retweetsNumber() 
+    {
         return $this->retweets->count(); 
     }
 
-    public function repliesNumber() {
+    public function repliesNumber() 
+    {
         return $this->replies->count();
     }
 
-    public function retweetOrigi() {
+    public function retweetOrigi() 
+    {
         return $this->where('id', $this->retweeted_from)->first();
     }
 
-    public function retweetsFromAuthUser() {
+    public function retweetsFromAuthUser() 
+    {
         return $this->user->is(auth()->user()) && !is_null($this->retweeted_from) && is_null($this->comment);
     }   
-
-    
 
 }
 
