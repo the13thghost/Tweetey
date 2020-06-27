@@ -5,7 +5,7 @@
                 {{ $tweet->user->avatar }}
             </x-avatar-icon>
         </a>
-        <div class="ml-1 mr-2 w-full calc-h">
+        <div class="ml-1 mr-2 w-full">
             <span class="font-bold">
                 <a href="{{route('profile', ['user' => $tweet->user->username])}}">
                     {{ $tweet->user->name }}

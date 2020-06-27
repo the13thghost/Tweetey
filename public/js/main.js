@@ -78,7 +78,6 @@ $(document).ready(function() {
     $(document).on("click", ".open-comment", function (e) {
         e.stopPropagation();
         $(".comment-form textarea").val("");
-        
 
         $(document).mouseup(function (e) {
             if ($(e.target).closest(".comment-overlay").length === 0) {

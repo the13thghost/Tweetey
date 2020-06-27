@@ -20,7 +20,7 @@
         </div>
     </div>
     @endif
-    <div class="flex calc-h">
+    <div class="flex">
         <a href="/profile/@if(!is_null($tweet->retweeted_from) && is_null($tweet->comment)){{$tweet->retweetOrigi()->user->username}}@else{{ $tweet->user->username }}@endif"
             class="flex-shrink-0 ml-4 w-9 mr-2">
             <x-avatar-icon :tweet='$tweet' class="ml-2">

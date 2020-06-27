@@ -374,7 +374,6 @@ $(document).on('click', '.comment', function (event) {
     event.preventDefault();
     let token = $('meta[name="csrf-token"]').attr('content');
     let id = $(this).data('id');
-    let closestHeight = $(this).closest('.calc-h').innerHeight() - 49;
 
     $.ajaxSetup({
         headers: {
@@ -404,14 +403,14 @@ $(document).on('click', '.comment', function (event) {
             if (response['images'] != 0) {
                 $(`<div class="images-reply"></div>`).insertAfter(param);
                 $('.images-reply').html(response['images']);
-                height = $('.calc-h-media').innerHeight() + 36; // Height of grey line
+                height = $('.calc-h').outerHeight() - 54; // Height of grey line
 
             } else {
-                height = closestHeight;
+                height = $('.calc-h').outerHeight() - 52;
             }
 
-            $('.enter-h').attr('style', `height:${height}px;width:2px`);
             $('.comment-form').attr('action', `/replies/${response['id']}`);
+            $('.enter-h').attr('style', `height:${height}px;width:2px`);
             $(".comment-overlay, .comment-content, .overlay-shade").addClass("active");
             $("body").css({
                 "overflow": "hidden"
@@ -424,6 +423,7 @@ $(document).on('click', '.comment', function (event) {
             popupContent('reposter_avatar', 'reposter_name', 'reposter_username', 'reposted_datetime', 'comment');
             $(`<div class="original-tweet border border-gray-400 rounded-xlt p-3 mt-2 mr-3"><div class="flex items-center"><img class="rounded-full object-cover mr-2" style="width:20px;height:20px" src="${response['avatar']}"><div class="mr-2 font-bold">${response['name']}</div><div class="text-gray-600 mr-1">${response['username']}</div><div class="text-gray-600">&middot; ${response['datetime']}</div></div><div class="word-break res-ori-body">${response['body']}</div></div>`).insertAfter('.response-body');
             imgEmpty('.res-ori-body');
+
         } else {
             popupContent('avatar', 'name', 'username', 'datetime', 'body');
             imgEmpty('.response-body');
