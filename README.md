@@ -9,7 +9,7 @@ Tweetey is a social media clone, intended to mimick the popular features on Twit
 - Replying on tweets/retweets
 - Viewing threads
 
-## Prequisites
+## Requirements
 
 PHP 7.3.4  
 Laravel 7.6.2  
