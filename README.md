@@ -1,6 +1,6 @@
 # Tweetey
 
-Tweetey is a social media clone, intended to mimick the popular features on Twitter. Some of these features include:
+Tweetey is a social media clone, intended to mimic the popular features on Twitter. Some of these features include:
 
 - Setting up and updating a user profile
 - Following users
@@ -20,15 +20,18 @@ MySQL 8.0.15
 1. Unzip the project
 2. Create a new database
 3. Rename .env.example file to .env and input your credentials:
-
+```
 DB_DATABASE=  
 DB_USERNAME=  
 DB_PASSWORD=  
+FILESYSTEM_DRIVER=public // add at the bottom
+```
 
 4. In terminal run: 
 ```
->> comsposer install  
+>> composer install  
 >> php artisan key:generate //generates a new APP_KEY  
+>> php artisan storage:link  
 >> php artisan config:cache  
 >> php artisan config:clear
 ```
