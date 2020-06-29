@@ -22,7 +22,7 @@
                 @if(current_user()->follows->count() <= 5)
                     Try <a href="/explore" class="text-blue-500 font-semibold hover:underline">Explore</a> to find more people to follow
                 @else
-                    And {{current_user()->follows->count() - 5 }}+ others
+                    And +{{current_user()->follows->count() - 5 }} others
                 @endif
                 </div>
             @endif 

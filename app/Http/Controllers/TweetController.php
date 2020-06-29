@@ -53,7 +53,7 @@ class TweetController extends Controller
                     return $fail('Max 4 files accepted!');
                 }
             }],
-            'image[]' => ['file', 'mimes:jpeg,png,jpg', 'size:10'],
+            'image[]' => ['file', 'mimes:jpeg,png,jpg', 'size:10240'],
             'body' => ['required', 'min:1', 'max:255']
         ]);
 

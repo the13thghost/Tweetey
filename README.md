@@ -2,12 +2,18 @@
 
 Tweetey is a social media clone, intended to mimic the popular features on Twitter. Some of these features include:
 
-- Setting up and updating a user profile
-- Following users
-- Tweeting with images
+- Managing a user profile
+- Following/unfollowing users
+- Publishing tweets with or without images
 - Retweeting with comments
 - Replying on tweets/retweets
 - Viewing threads
+
+Links to example images of project:
+- Profile: https://i.imgur.com/ntnwmXs.png  
+- Replies: https://i.imgur.com/W3WILHX.png  
+- Thread: https://i.imgur.com/ZNH2a2F.png  
+- Popup to reply: https://i.imgur.com/HcMWWLz.png 
 
 ## Requirements
 
@@ -45,7 +51,3 @@ FILESYSTEM_DRIVER=public // add at the bottom
 ```
 >> php artisan serve
 ```
-
-## Screenshots
-
-<img src="https://i.imgur.com/ub4ykQe.png" style="height:600px;width:600px;object-fit:cover">
