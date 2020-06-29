@@ -48,4 +48,4 @@ FILESYSTEM_DRIVER=public // add at the bottom
 
 ## Screenshots
 
-![Screenshot of project](https://i.imgur.com/ub4ykQe.png)
+<img src="https://i.imgur.com/ub4ykQe.png" style="height:600px;width:600px;object-fit:cover">
