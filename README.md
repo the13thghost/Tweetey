@@ -45,3 +45,7 @@ FILESYSTEM_DRIVER=public // add at the bottom
 ```
 >> php artisan serve
 ```
+
+## Screenshots
+
+![Screenshot of project](https://i.imgur.com/ub4ykQe.png)
