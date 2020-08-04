@@ -111,7 +111,7 @@ $(document).ready(function() {
         $(".bio-form textarea").val("");
         $("body").css({
             "overflow": "hidden"
-        });
+        }); 
 
         $(document).mouseup(function (e) {
             if ($(e.target).closest(".bio-overlay").length === 0) {

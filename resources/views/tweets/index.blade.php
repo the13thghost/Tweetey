@@ -1,10 +1,10 @@
 <x-app>
-    @include('__publish-panel') 
+    @include('__publish-panel')  
 
-    <section class="border border-gray-300 mb-6 tweets-1 load-tweets thread cursor-pointer">
+    <section class="border border-gray-300 mb-6 tweets-1 load-tweets cursor-pointer">
         <div class="tweets-fresh load-tweets-ajax">
             @forelse($tweets as $tweet)
-            <div class="{{ $loop->last ? '' : 'border-b-1' }} border-gray-300 py-3 hover:bg-gray-blue">
+            <div class="{{ $loop->last ? '' : 'border-b-1' }} border-gray-300 py-3 hover:bg-gray-blue thread">
                 {{-- check if value exists in retweeted_from > its a retweetet && check if comment is nul > its a tweet without a comment --}}
                 @if(!is_null($tweet->retweeted_from) && is_null($tweet->comment)) 
                 <div class="flex ml-4 items-center mb-1">
